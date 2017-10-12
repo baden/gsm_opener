@@ -1,6 +1,6 @@
 {
   "name": "Progressive GSM-opener",
-  "short_name": "Progressive GSM-opener",
+  "short_name": "GSM opener",
   "lang": "en-US",
   "start_url": "./index.html",
   "display": "standalone",
