@@ -1,0 +1,28 @@
+{
+  "name": "gsm_opener",
+  "version": "1.0.0",
+  "description": "GSM-opener app",
+  "homepage": "https://github.com/baden/gsm_opener#readme",
+  "main": "index.js",
+  "scripts": {
+    "build:prod": "webpack --progress --profile --bail",
+    "build": "npm run build:prod",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baden/gsm_opener.git"
+  },
+  "keywords": [
+    "GSM"
+  ],
+  "author": "Denys Batrak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baden/gsm_opener/issues"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.7.1"
+  }
+}

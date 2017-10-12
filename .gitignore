@@ -1,0 +1,5 @@
+elm-stuff/
+tests/elm-stuff/
+node_modules/
+dist/
+npm-debug.log
