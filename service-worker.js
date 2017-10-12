@@ -140,15 +140,19 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "02900d7bc2489510c1ce53b81cb0fd84"
+    "revision": "e51210b4baccbd555d5ca69f8d3758de"
   },
   {
-    "url": "js/app-14d87031f9f3caefed26.js",
-    "revision": "5c0d0e1f6bb0c4eb2e343c4012a9c3a1"
+    "url": "js/app-3c8418b5da68c7000cd4.js",
+    "revision": "5418405b7fe2301b5ebc300c0b188dd0"
   },
   {
     "url": "mstile-150x150.png",
     "revision": "4734b977f66899ed54db0319cfeb984b"
+  },
+  {
+    "url": "offline.html",
+    "revision": "87e2277899e55f890978537dff0bc57e"
   },
   {
     "url": "safari-pinned-tab.svg",
@@ -162,5 +166,5 @@ const fileManifest = [
 
 const workboxSW = new self.WorkboxSW();
 workboxSW.precache(fileManifest);
-workboxSW.router.registerNavigationRoute("/index.html");workboxSW.router.registerRoute(/^https:\/\/fonts\.gstatic\.com(.+)/, workboxSW.strategies.cacheFirst({}), 'GET');
+workboxSW.router.registerNavigationRoute("/offline.html");workboxSW.router.registerRoute(/^https:\/\/fonts\.gstatic\.com(.+)/, workboxSW.strategies.cacheFirst({}), 'GET');
 workboxSW.router.registerRoute(/^https:\/\/fonts\.googleapis\.com(.+)/, workboxSW.strategies.cacheFirst({}), 'GET');
