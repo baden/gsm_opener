@@ -140,11 +140,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "ef0899a4f31d15878d415116986e61cf"
+    "revision": "de250752a2afb6a1e199ee1748bc314e"
   },
   {
-    "url": "js/app-cf6c0057a37c7f2536c6.js",
-    "revision": "ded48e10854fa57e08ee69b54046b6a6"
+    "url": "js/app-cec2e8378cd214eb0f67.js",
+    "revision": "5f085b2722352b59df300b5c43585f75"
   },
   {
     "url": "mstile-150x150.png",
@@ -162,4 +162,5 @@ const fileManifest = [
 
 const workboxSW = new self.WorkboxSW();
 workboxSW.precache(fileManifest);
-workboxSW.router.registerRoute(/^https:\/\/fonts.googleapis.com/, workboxSW.strategies.cacheFirst({}), 'GET');
+workboxSW.router.registerNavigationRoute("/index.html");workboxSW.router.registerRoute(/^https:\/\/fonts\.gstatic\.com(.+)/, workboxSW.strategies.cacheFirst({}), 'GET');
+workboxSW.router.registerRoute(/^https:\/\/fonts\.googleapis\.com(.+)/, workboxSW.strategies.cacheFirst({}), 'GET');
