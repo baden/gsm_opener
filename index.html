@@ -41,7 +41,7 @@
 
 <body style="padding:0; margin:0;-webkit-flex:1">
     <!-- <div class="header" style="width: 100%; height: 64px; background-color: blue"></div> -->
-    <section id="elm-app">TBD20</section>
+    <section id="elm-app">TBD24</section>
 
     <div style="text-align: center; padding-top:100px">
         <i class="material-icons" style="font-size: 128px">face</i>
@@ -54,6 +54,30 @@
         .then(function(registration) {
           console.log('Service Worker registration successful with scope: ',
            registration.scope);
+          console.dir(registration);
+          registration.onupdatefound = function() {
+              const installingWorker = registration.installing;
+            //   https://medium.com/@zwacky/pwa-create-a-new-update-available-notification-using-service-workers-18be9168d717
+              installingWorker.onstatechange = () => {
+              						switch (installingWorker.state) {
+              							case 'installed':
+              								if (navigator.serviceWorker.controller) {
+                                                console.log("update found!");
+                                                if (confirm('Доступна новая версия сайта. Перезагрузить страницу?')) {
+                                                  window.location.reload();
+                                                }
+
+              									// new update available
+              							// 		resolve(true);
+              								} else {
+                                                console.log("no update found!");
+              									// no update available
+              							// 		resolve(false);
+              								}
+              								break;
+              						}
+              					};
+          }
         })
         .catch(function(err) {
           console.log(err);
@@ -79,5 +103,5 @@
 
 
       </script>
-<script type="text/javascript" src="js/app-3c8418b5da68c7000cd4.js"></script></body>
+<script type="text/javascript" src="js/app-5c3d85e8bf014bce4c01.js"></script></body>
 </html>
