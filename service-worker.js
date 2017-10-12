@@ -39,10 +39,6 @@ const fileManifest = [
     "revision": "c28aa3f82ed2b76a58ed67033ed1a717"
   },
   {
-    "url": "font/MaterialIcons-Regular.570eb83859dc23dd0eec423a49e147fe.woff2",
-    "revision": "570eb83859dc23dd0eec423a49e147fe"
-  },
-  {
     "url": "images/android-chrome-512x512.png",
     "revision": "deb4eed0be0639e52179b84747f2d323"
   },
@@ -144,11 +140,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "61ae90d2b373d4ad51dbb621be8819e4"
+    "revision": "ef0899a4f31d15878d415116986e61cf"
   },
   {
-    "url": "js/app-de7317ffb7cac475b8d9.js",
-    "revision": "5d60d99e736b4b074b2d6eb748c09c68"
+    "url": "js/app-cf6c0057a37c7f2536c6.js",
+    "revision": "ded48e10854fa57e08ee69b54046b6a6"
   },
   {
     "url": "mstile-150x150.png",
@@ -160,9 +156,10 @@ const fileManifest = [
   },
   {
     "url": "styles.css",
-    "revision": "07f9ecf88a2ccb15a4097b488d547b06"
+    "revision": "4a4271f4fad9e8b158f7ee81030ad82b"
   }
 ];
 
 const workboxSW = new self.WorkboxSW();
 workboxSW.precache(fileManifest);
+workboxSW.router.registerRoute(/^https:\/\/fonts.googleapis.com/, workboxSW.strategies.cacheFirst({}), 'GET');
