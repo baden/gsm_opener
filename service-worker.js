@@ -19,10 +19,6 @@ importScripts('workbox-sw.prod.v2.1.0.js');
  */
 const fileManifest = [
   {
-    "url": "all.css",
-    "revision": "45de683822077b4d4e486ed90d05c778"
-  },
-  {
     "url": "android-chrome-192x192.png",
     "revision": "a6f6132a50fa49b4a8c59831f8242565"
   },
@@ -43,23 +39,7 @@ const fileManifest = [
     "revision": "c28aa3f82ed2b76a58ed67033ed1a717"
   },
   {
-    "url": "fonts/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2",
-    "revision": "78a1f8748dc202eda5424c1603d28bfc"
-  },
-  {
-    "url": "fonts/iPCrlNN5TpNi9yeZKkKxX5ZJ3j3k35k5UVopKkfl5AGglnMp3_3A8V8Ai8YosRtX.woff2",
-    "revision": "bfd1d36dda9b90c13c56c747f0e023cc"
-  },
-  {
-    "url": "fonts/material-icons.css",
-    "revision": "c5941eed2e20a509114128aab1e96edf"
-  },
-  {
-    "url": "fonts/MaterialIcons-Regular.svg",
-    "revision": "a1adea65594c502f9d9428f13ae210e1"
-  },
-  {
-    "url": "fonts/MaterialIcons-Regular.woff2",
+    "url": "font/MaterialIcons-Regular.570eb83859dc23dd0eec423a49e147fe.woff2",
     "revision": "570eb83859dc23dd0eec423a49e147fe"
   },
   {
@@ -164,11 +144,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "07ff4207425841d6897914f858dcb803"
+    "revision": "9d0f398fad2ae5a245d9e672a40b1c72"
   },
   {
-    "url": "js/app-9603c47578794fe42ae9.js",
-    "revision": "351e30cd03193906d5d2584ba677a655"
+    "url": "js/app-d75cb82104edd437fb00.js",
+    "revision": "2302b4df655195668296e5245f359068"
   },
   {
     "url": "mstile-150x150.png",
@@ -177,6 +157,10 @@ const fileManifest = [
   {
     "url": "safari-pinned-tab.svg",
     "revision": "f88ccd4d81027df0e476da2ae379a63f"
+  },
+  {
+    "url": "styles.css",
+    "revision": "07f9ecf88a2ccb15a4097b488d547b06"
   }
 ];
 
