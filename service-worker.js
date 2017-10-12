@@ -140,11 +140,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "de39e99881fafcdd342699cc5db829d1"
+    "revision": "72135abb9cea31f00447f83dc8ca9d7b"
   },
   {
-    "url": "js/app-cc9a21b927dbe1d25d06.js",
-    "revision": "d7b4e33046229497ac6768bd47fec71e"
+    "url": "js/app-f8167e1f0967c5246b65.js",
+    "revision": "5b6004cbf60e0d434536a077c7c37816"
   },
   {
     "url": "mstile-150x150.png",
