@@ -19,6 +19,10 @@ importScripts('workbox-sw.prod.v2.1.0.js');
  */
 const fileManifest = [
   {
+    "url": "all.css",
+    "revision": "45de683822077b4d4e486ed90d05c778"
+  },
+  {
     "url": "android-chrome-192x192.png",
     "revision": "a6f6132a50fa49b4a8c59831f8242565"
   },
@@ -37,6 +41,26 @@ const fileManifest = [
   {
     "url": "favicon-32x32.png",
     "revision": "c28aa3f82ed2b76a58ed67033ed1a717"
+  },
+  {
+    "url": "fonts/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2",
+    "revision": "78a1f8748dc202eda5424c1603d28bfc"
+  },
+  {
+    "url": "fonts/iPCrlNN5TpNi9yeZKkKxX5ZJ3j3k35k5UVopKkfl5AGglnMp3_3A8V8Ai8YosRtX.woff2",
+    "revision": "bfd1d36dda9b90c13c56c747f0e023cc"
+  },
+  {
+    "url": "fonts/material-icons.css",
+    "revision": "c5941eed2e20a509114128aab1e96edf"
+  },
+  {
+    "url": "fonts/MaterialIcons-Regular.svg",
+    "revision": "a1adea65594c502f9d9428f13ae210e1"
+  },
+  {
+    "url": "fonts/MaterialIcons-Regular.woff2",
+    "revision": "570eb83859dc23dd0eec423a49e147fe"
   },
   {
     "url": "images/android-chrome-512x512.png",
@@ -140,15 +164,19 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "063ec31258b05d53b6f679a090637f5a"
+    "revision": "3a7889032e84789d804805e7ac42dba1"
   },
   {
-    "url": "js/app-4827f8f9dd98c2fe6f20.js",
+    "url": "js/app-5777929e068e296b0334.js",
     "revision": "5fb98049e0b25172a3c462aca51a549f"
   },
   {
     "url": "mstile-150x150.png",
     "revision": "4734b977f66899ed54db0319cfeb984b"
+  },
+  {
+    "url": "safari-pinned-tab.svg",
+    "revision": "f88ccd4d81027df0e476da2ae379a63f"
   }
 ];
 
