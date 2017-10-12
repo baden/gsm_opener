@@ -140,10 +140,10 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "d67eb3f372a5f7209061c373b1e0df59"
+    "revision": "063ec31258b05d53b6f679a090637f5a"
   },
   {
-    "url": "js/app-2c4a7aa3b6a448faa3db.js",
+    "url": "js/app-4827f8f9dd98c2fe6f20.js",
     "revision": "5fb98049e0b25172a3c462aca51a549f"
   },
   {
