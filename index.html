@@ -49,5 +49,18 @@
 
 <body>
     <section id="elm-app">TBD</section>
-<script type="text/javascript" src="js/app-77f216ca88acc667a709.js"></script></body>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+        .then(function(registration) {
+          console.log('Service Worker registration successful with scope: ',
+           registration.scope);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+      }
+      </script>
+<script type="text/javascript" src="js/app-4ad703b90ef82a44ddbd.js"></script></body>
 </html>
