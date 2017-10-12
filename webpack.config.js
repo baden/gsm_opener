@@ -20,7 +20,7 @@ module.exports = function(options) {
     plugins: [
       new workboxPlugin({
         globDirectory: DIST_DIR,
-        globPatterns: ['**/*.{html,js,css}'],
+        globPatterns: ['**/*.{html,js,css,png,woff2,svg}'],
         swDest: path.join(DIST_DIR, 'service-worker.js'),
       }),
       new CopyWebpackPlugin([{

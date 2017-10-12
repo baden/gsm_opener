@@ -2,7 +2,7 @@
   "name": "gsm_opener",
   "version": "1.0.0",
   "description": "GSM-opener app",
-  "homepage": "https://baden.github.io/gsm_opener",
+  "homepage": "https://gsm.baden.space",
   "main": "index.js",
   "scripts": {
     "clean:dist": "rimraf -- dist",
