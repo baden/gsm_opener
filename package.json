@@ -2,11 +2,13 @@
   "name": "gsm_opener",
   "version": "1.0.0",
   "description": "GSM-opener app",
-  "homepage": "https://github.com/baden/gsm_opener#readme",
+  "homepage": "https://baden.github.io/gsm_opener",
   "main": "index.js",
   "scripts": {
     "build:prod": "webpack --progress --profile --bail",
     "build": "npm run build:prod",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +24,7 @@
     "url": "https://github.com/baden/gsm_opener/issues"
   },
   "devDependencies": {
+    "gh-pages": "^1.0.0",
     "html-webpack-plugin": "^2.30.1",
     "webpack": "^3.7.1"
   }
