@@ -2,19 +2,69 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <base href="/">
-  <title>GSM opener</title>
-  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    <meta name="description" content="GSM Opener prototype" />
+    <meta name="author" content="Denys Batrak">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!--meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <base href="/gsm_opener/">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
+
+    <title>GSM opener</title>
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"> -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Extended"
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Extended"
       rel="stylesheet">
 
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="GSM opener">
+    <meta name="apple-mobile-web-app-title" content="GSM opener">
+    <meta name="theme-color" content="#ffe3ff">
+    <meta name="msapplication-navbutton-color" content="#ffe3ff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="/index.html">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+    <!--link rel="icon" href="favicon.ico" type="image/x-icon"-->
+    <link rel="icon" type="image/png" sizes="192x192"  href="/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
-  <section id="elm-app">TBD</section>
+    <section id="elm-app">TBD</section>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+        .then(function(registration) {
+          console.log('Service Worker registration successful with scope: ',
+           registration.scope);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+      }
+      </script>
 </body>
 </html>

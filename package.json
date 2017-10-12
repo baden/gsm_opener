@@ -5,7 +5,8 @@
   "homepage": "https://baden.github.io/gsm_opener",
   "main": "index.js",
   "scripts": {
-    "build:prod": "webpack --progress --profile --bail",
+    "clean:dist": "rimraf -- dist",
+    "build:prod": "npm run clean:dist && webpack --progress --profile --bail",
     "build": "npm run build:prod",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
@@ -24,8 +25,11 @@
     "url": "https://github.com/baden/gsm_opener/issues"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^4.1.1",
     "gh-pages": "^1.0.0",
     "html-webpack-plugin": "^2.30.1",
-    "webpack": "^3.7.1"
+    "rimraf": "^2.6.2",
+    "webpack": "^3.7.1",
+    "workbox-webpack-plugin": "^2.1.0"
   }
 }
