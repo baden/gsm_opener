@@ -108,11 +108,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "f3db3bb197d7d53484b8a14f81e668dd"
+    "revision": "ba2450608405310bb0814a2fa70d2d7b"
   },
   {
-    "url": "js/app-d243c6fa41798cf73648.js",
-    "revision": "1fa0ac85fba56d9e5c997db4f3f9c357"
+    "url": "js/app-06f88db5577acb4692a3.js",
+    "revision": "a2d54e907e591a49b2578572b6c12aa8"
   },
   {
     "url": "offline.html",
