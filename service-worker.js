@@ -19,10 +19,6 @@ importScripts('workbox-sw.prod.v2.1.0.js');
  */
 const fileManifest = [
   {
-    "url": "apple-touch-icon.png",
-    "revision": "5911e77ae8fc069b4f1d26658c4d4361"
-  },
-  {
     "url": "icons/android/icon_144x144.png",
     "revision": "d3ec54bc62e1fbf58d594e7d4892092b"
   },
@@ -52,39 +48,39 @@ const fileManifest = [
   },
   {
     "url": "icons/ios/icon_1024x1024.png",
-    "revision": "88691a291ce6b3aab23c5ba45cbc7663"
+    "revision": "3cf91c54e15d72934ced61a2459a723b"
   },
   {
     "url": "icons/ios/icon_114x114.png",
-    "revision": "25210177ab3ef2064016eb35fe2c6553"
+    "revision": "c1d9e553926aa0ba2d709eb7a0f5a3ec"
   },
   {
     "url": "icons/ios/icon_120x120.png",
-    "revision": "f2f34c3894d9c175388da2b5fde22793"
+    "revision": "51eb60da86694b45fabf114f99e58fc8"
   },
   {
     "url": "icons/ios/icon_152x152.png",
-    "revision": "469ec99ff7910687f208354cdeb8af34"
+    "revision": "04e129473da8864ff9056c6e2e27cfb2"
   },
   {
     "url": "icons/ios/icon_167x167.png",
-    "revision": "af785e6d86a9ea604832350792d95446"
+    "revision": "f36f1be6cb6fe5d31997384a80922712"
   },
   {
     "url": "icons/ios/icon_180x180.png",
-    "revision": "d64f6cae5b7b3eb2fb1ce85b38b66194"
+    "revision": "5ee7b79b3ef0ee0d6077f1cbd45c5e34"
   },
   {
     "url": "icons/ios/icon_57x57.png",
-    "revision": "0d4a35151f4605e1f197a88599a497d7"
+    "revision": "71683206574e9aeda6eb283195c310f7"
   },
   {
     "url": "icons/ios/icon_60x60.png",
-    "revision": "0a27bb33e7193e2b933802cc242b8afd"
+    "revision": "a49978ee29c0bd734a39b64807882650"
   },
   {
     "url": "icons/ios/icon_76x76.png",
-    "revision": "6c08464067291f32d598e8236461dad1"
+    "revision": "ead51ef07386924ae34fbb5ee1c17869"
   },
   {
     "url": "icons/other/icon_150x150.png",
@@ -112,11 +108,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "5ed8d906c470f3ea2357dd8480ff5e10"
+    "revision": "bb9819bef561a83a83ecc7ffa808a78b"
   },
   {
-    "url": "js/app-505e2392f1b907a921d3.js",
-    "revision": "ccad1bca762b53457dedaa55ed13e796"
+    "url": "js/app-597d9f8d18f67eb83db8.js",
+    "revision": "05680f6bf2f7d1014654aaed7cf1e2cc"
   },
   {
     "url": "offline.html",
@@ -124,7 +120,7 @@ const fileManifest = [
   },
   {
     "url": "safari-pinned-tab.svg",
-    "revision": "f88ccd4d81027df0e476da2ae379a63f"
+    "revision": "bc9fb68776ea60df49c19e5a3f38fa07"
   },
   {
     "url": "styles.css",
