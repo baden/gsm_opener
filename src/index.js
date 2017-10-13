@@ -1,5 +1,6 @@
+require('./all.scss');
 
-console.log("WIP");
+console.log("WIP3");
 
 // require('./all.scss');
 // require('bootstrap-css');
@@ -8,9 +9,10 @@ console.log("WIP");
 // const embed = require('./app.js');
 // console.dir(embed);
 
-document.addEventListener('touchmove', function (event) {
-  if (event.scale !== 1) { event.preventDefault(); }
-}, false);
+// Не очень это помогает.
+// document.addEventListener('touchmove', function (event) {
+//   if (event.scale !== 1) { event.preventDefault(); }
+// }, false);
 
 // var element = document.getElementById('elm-app');
 // var App = embed(element);
