@@ -19,6 +19,10 @@ importScripts('workbox-sw.prod.v2.1.0.js');
  */
 const fileManifest = [
   {
+    "url": "apple-touch-icon.png",
+    "revision": "5911e77ae8fc069b4f1d26658c4d4361"
+  },
+  {
     "url": "icons/android/icon_144x144.png",
     "revision": "d3ec54bc62e1fbf58d594e7d4892092b"
   },
@@ -51,38 +55,6 @@ const fileManifest = [
     "revision": "8002c434f8ef26f1b4bf14ce6980a4dd"
   },
   {
-    "url": "icons/ios/icon_114x114.png",
-    "revision": "29b454b50b22009517111c6d7e4a79b1"
-  },
-  {
-    "url": "icons/ios/icon_120x120.png",
-    "revision": "9e33b07ec616872b89ac948911806038"
-  },
-  {
-    "url": "icons/ios/icon_152x152.png",
-    "revision": "a3e6a3574af3f001e7759fcf8eb3fbd1"
-  },
-  {
-    "url": "icons/ios/icon_167x167.png",
-    "revision": "7eb0b9348d8f12e13e978665f5c0401f"
-  },
-  {
-    "url": "icons/ios/icon_180x180.png",
-    "revision": "74b60fb839d7e54c3950c98e80aa426a"
-  },
-  {
-    "url": "icons/ios/icon_57x57.png",
-    "revision": "57468d29b17e62ea9794462c546a44ed"
-  },
-  {
-    "url": "icons/ios/icon_60x60.png",
-    "revision": "0464aeefaaa51bc71413a1f2c35c228e"
-  },
-  {
-    "url": "icons/ios/icon_76x76.png",
-    "revision": "8f255bbed78c102aba0152fb0db501b8"
-  },
-  {
     "url": "icons/other/icon_150x150.png",
     "revision": "10574dee246af4e3d2300a8148ea397d"
   },
@@ -108,11 +80,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "c73d6446215f749a7ac5a58dc0656645"
+    "revision": "ef840d2a2f1ba147168f063fad354407"
   },
   {
-    "url": "js/app-05caee53130c1c67a9a1.js",
-    "revision": "5563d937bcd58017f0b762ac08055268"
+    "url": "js/app-2a8d16151defae24036d.js",
+    "revision": "18e54ff9fc06dd96ed8f7300184544f1"
   },
   {
     "url": "offline.html",
