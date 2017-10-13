@@ -19,136 +19,100 @@ importScripts('workbox-sw.prod.v2.1.0.js');
  */
 const fileManifest = [
   {
-    "url": "android-chrome-192x192.png",
-    "revision": "a6f6132a50fa49b4a8c59831f8242565"
+    "url": "icons/android/icon_144x144.png",
+    "revision": "d3ec54bc62e1fbf58d594e7d4892092b"
   },
   {
-    "url": "android-chrome-512x512.png",
-    "revision": "176f069d12cac40962fe19cc0bb789c1"
+    "url": "icons/android/icon_192x192.png",
+    "revision": "b2e3fd1114f011e1b9209dffe9c611b2"
   },
   {
-    "url": "apple-touch-icon.png",
-    "revision": "5911e77ae8fc069b4f1d26658c4d4361"
+    "url": "icons/android/icon_36x36.png",
+    "revision": "4c7e4a050297dec4057b770a89965bd9"
   },
   {
-    "url": "favicon-16x16.png",
-    "revision": "15992b2f602bb30217784c67371f51e6"
+    "url": "icons/android/icon_48x48.png",
+    "revision": "13d84bbac334d40b118b10adf2f50fb9"
   },
   {
-    "url": "favicon-32x32.png",
-    "revision": "c28aa3f82ed2b76a58ed67033ed1a717"
+    "url": "icons/android/icon_512x512.png",
+    "revision": "7bc6fba1839f37c6069b2e81e869122e"
   },
   {
-    "url": "images/android-chrome-512x512.png",
-    "revision": "deb4eed0be0639e52179b84747f2d323"
+    "url": "icons/android/icon_72x72.png",
+    "revision": "5c77da6695e7a73223e0c5c830d63ea5"
   },
   {
-    "url": "images/android-icon-144x144.png",
-    "revision": "b9e5210af0db511bd5dfd49e0f154da5"
+    "url": "icons/android/icon_96x96.png",
+    "revision": "4404775c10e57bc56ca6416422c686d0"
   },
   {
-    "url": "images/android-icon-192x192.png",
-    "revision": "71b3d381fac662ebfa18bc0597d63e3a"
+    "url": "icons/ios/icon_1024x1024.png",
+    "revision": "8002c434f8ef26f1b4bf14ce6980a4dd"
   },
   {
-    "url": "images/android-icon-36x36.png",
-    "revision": "625af43a5bfb270a82cfad4b6f3dd101"
+    "url": "icons/ios/icon_114x114.png",
+    "revision": "29b454b50b22009517111c6d7e4a79b1"
   },
   {
-    "url": "images/android-icon-48x48.png",
-    "revision": "9bc2764b6a0d335c235a80427d56514a"
+    "url": "icons/ios/icon_120x120.png",
+    "revision": "9e33b07ec616872b89ac948911806038"
   },
   {
-    "url": "images/android-icon-72x72.png",
-    "revision": "ba7d5739bce6b7768603be88b305e889"
+    "url": "icons/ios/icon_152x152.png",
+    "revision": "a3e6a3574af3f001e7759fcf8eb3fbd1"
   },
   {
-    "url": "images/android-icon-96x96.png",
-    "revision": "77680c894f84dab3ff6a6257b2e11d9f"
+    "url": "icons/ios/icon_167x167.png",
+    "revision": "7eb0b9348d8f12e13e978665f5c0401f"
   },
   {
-    "url": "images/apple-icon-114x114.png",
-    "revision": "efa43c193861f0124c68886a6502c4b6"
+    "url": "icons/ios/icon_180x180.png",
+    "revision": "74b60fb839d7e54c3950c98e80aa426a"
   },
   {
-    "url": "images/apple-icon-120x120.png",
-    "revision": "183852fea1b3d8662eeb32bc197c55c9"
+    "url": "icons/ios/icon_57x57.png",
+    "revision": "57468d29b17e62ea9794462c546a44ed"
   },
   {
-    "url": "images/apple-icon-144x144.png",
-    "revision": "b9e5210af0db511bd5dfd49e0f154da5"
+    "url": "icons/ios/icon_60x60.png",
+    "revision": "0464aeefaaa51bc71413a1f2c35c228e"
   },
   {
-    "url": "images/apple-icon-152x152.png",
-    "revision": "dbe35ceb676982921f56acb16b431867"
+    "url": "icons/ios/icon_76x76.png",
+    "revision": "8f255bbed78c102aba0152fb0db501b8"
   },
   {
-    "url": "images/apple-icon-180x180.png",
-    "revision": "d4ba4bb28158122fd646c35e8bf464b3"
+    "url": "icons/other/icon_150x150.png",
+    "revision": "10574dee246af4e3d2300a8148ea397d"
   },
   {
-    "url": "images/apple-icon-57x57.png",
-    "revision": "3f6777c9ba50cc33648f949ab06ad288"
+    "url": "icons/other/icon_16x16.png",
+    "revision": "f3f813607fced982a62f0c4ba65b7ab2"
   },
   {
-    "url": "images/apple-icon-60x60.png",
-    "revision": "7b329a01a902df1f2fd742ce3a45fdfa"
+    "url": "icons/other/icon_192x192.png",
+    "revision": "b2e3fd1114f011e1b9209dffe9c611b2"
   },
   {
-    "url": "images/apple-icon-72x72.png",
-    "revision": "ba7d5739bce6b7768603be88b305e889"
+    "url": "icons/other/icon_310x310.png",
+    "revision": "e00de42fb9c6ffaea17da1837e00ba08"
   },
   {
-    "url": "images/apple-icon-76x76.png",
-    "revision": "29973e15d81ef9a8e7f12cc02601c2d2"
+    "url": "icons/other/icon_32x32.png",
+    "revision": "befc766e8dab6a5f0fb64073d8b71f34"
   },
   {
-    "url": "images/apple-icon-precomposed.png",
-    "revision": "27cb2234dac6b97a339790d31a1ead48"
-  },
-  {
-    "url": "images/apple-icon.png",
-    "revision": "27cb2234dac6b97a339790d31a1ead48"
-  },
-  {
-    "url": "images/favicon-16x16.png",
-    "revision": "60ff3bd7f883131f5172c32cecf27c62"
-  },
-  {
-    "url": "images/favicon-32x32.png",
-    "revision": "f866098272235235bda8b536df0583ff"
-  },
-  {
-    "url": "images/favicon-96x96.png",
-    "revision": "77680c894f84dab3ff6a6257b2e11d9f"
-  },
-  {
-    "url": "images/ms-icon-144x144.png",
-    "revision": "b9e5210af0db511bd5dfd49e0f154da5"
-  },
-  {
-    "url": "images/ms-icon-150x150.png",
-    "revision": "2928d4d71e4b68c5fb69e0ff3fd42cb5"
-  },
-  {
-    "url": "images/ms-icon-310x310.png",
-    "revision": "731017c22582b7f283290b6c708a6568"
-  },
-  {
-    "url": "images/ms-icon-70x70.png",
-    "revision": "6f9e77b21335555ee2b7553ecae1c2a8"
+    "url": "icons/other/icon_70x70.png",
+    "revision": "5a49ed3b4cc8082b18132fa542dd4b62"
   },
   {
     "url": "index.html",
-    "revision": "92291dc940e99c561ed3a70c22927d5a"
+    "revision": "e3ccf812cf95518714db2d87a1586cf6"
   },
   {
-    "url": "js/app-423adef681cfe33528fd.js",
-    "revision": "8d542fca2fa6481350d0656ead3959ad"
-  },
-  {
-    "url": "mstile-150x150.png",
-    "revision": "4734b977f66899ed54db0319cfeb984b"
+    "url": "js/app-e7fed9e0ae3e081c55f2.js",
+    "revision": "92d52d2f9cbfdda9d5e4a416dc9db094"
   },
   {
     "url": "offline.html",
@@ -166,5 +130,5 @@ const fileManifest = [
 
 const workboxSW = new self.WorkboxSW();
 workboxSW.precache(fileManifest);
-workboxSW.router.registerNavigationRoute("/offline.html");workboxSW.router.registerRoute(/^https:\/\/fonts\.gstatic\.com(.+)/, workboxSW.strategies.cacheFirst({}), 'GET');
+workboxSW.router.registerNavigationRoute("/index.html");workboxSW.router.registerRoute(/^https:\/\/fonts\.gstatic\.com(.+)/, workboxSW.strategies.cacheFirst({}), 'GET');
 workboxSW.router.registerRoute(/^https:\/\/fonts\.googleapis\.com(.+)/, workboxSW.strategies.cacheFirst({}), 'GET');
