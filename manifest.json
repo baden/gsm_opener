@@ -124,7 +124,7 @@
   "short_name": "GSM opener",
   "description": "GSM-opener control",
   "lang": "en-US",
-  "background_color": "#606060",
-  "theme_color": "#606060",
-  "theme-color": "#606060"
+  "background_color": "#eee",
+  "theme_color": "#eee",
+  "theme-color": "#eee"
 }
