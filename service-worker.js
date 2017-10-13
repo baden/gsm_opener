@@ -52,7 +52,39 @@ const fileManifest = [
   },
   {
     "url": "icons/ios/icon_1024x1024.png",
-    "revision": "8002c434f8ef26f1b4bf14ce6980a4dd"
+    "revision": "88691a291ce6b3aab23c5ba45cbc7663"
+  },
+  {
+    "url": "icons/ios/icon_114x114.png",
+    "revision": "25210177ab3ef2064016eb35fe2c6553"
+  },
+  {
+    "url": "icons/ios/icon_120x120.png",
+    "revision": "f2f34c3894d9c175388da2b5fde22793"
+  },
+  {
+    "url": "icons/ios/icon_152x152.png",
+    "revision": "469ec99ff7910687f208354cdeb8af34"
+  },
+  {
+    "url": "icons/ios/icon_167x167.png",
+    "revision": "af785e6d86a9ea604832350792d95446"
+  },
+  {
+    "url": "icons/ios/icon_180x180.png",
+    "revision": "d64f6cae5b7b3eb2fb1ce85b38b66194"
+  },
+  {
+    "url": "icons/ios/icon_57x57.png",
+    "revision": "0d4a35151f4605e1f197a88599a497d7"
+  },
+  {
+    "url": "icons/ios/icon_60x60.png",
+    "revision": "0a27bb33e7193e2b933802cc242b8afd"
+  },
+  {
+    "url": "icons/ios/icon_76x76.png",
+    "revision": "6c08464067291f32d598e8236461dad1"
   },
   {
     "url": "icons/other/icon_150x150.png",
@@ -80,11 +112,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "ef840d2a2f1ba147168f063fad354407"
+    "revision": "5ed8d906c470f3ea2357dd8480ff5e10"
   },
   {
-    "url": "js/app-2a8d16151defae24036d.js",
-    "revision": "18e54ff9fc06dd96ed8f7300184544f1"
+    "url": "js/app-505e2392f1b907a921d3.js",
+    "revision": "ccad1bca762b53457dedaa55ed13e796"
   },
   {
     "url": "offline.html",
