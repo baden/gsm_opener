@@ -20,31 +20,31 @@ importScripts('workbox-sw.prod.v2.1.0.js');
 const fileManifest = [
   {
     "url": "icons/android/icon_144x144.png",
-    "revision": "d3ec54bc62e1fbf58d594e7d4892092b"
+    "revision": "e40ce1dc6433b2f400eb850c26319dc0"
   },
   {
     "url": "icons/android/icon_192x192.png",
-    "revision": "b2e3fd1114f011e1b9209dffe9c611b2"
+    "revision": "471249a031dd085165e733880c5f9d2f"
   },
   {
     "url": "icons/android/icon_36x36.png",
-    "revision": "4c7e4a050297dec4057b770a89965bd9"
+    "revision": "4a682233d298092826785d54ae04acf8"
   },
   {
     "url": "icons/android/icon_48x48.png",
-    "revision": "13d84bbac334d40b118b10adf2f50fb9"
+    "revision": "9c12a4e112508c31a7030492e4208aff"
   },
   {
     "url": "icons/android/icon_512x512.png",
-    "revision": "7bc6fba1839f37c6069b2e81e869122e"
+    "revision": "b14fff355593f5651459f058e2bf58b9"
   },
   {
     "url": "icons/android/icon_72x72.png",
-    "revision": "5c77da6695e7a73223e0c5c830d63ea5"
+    "revision": "4fc4b768ffdd7bb29e3ce414056f2bd0"
   },
   {
     "url": "icons/android/icon_96x96.png",
-    "revision": "4404775c10e57bc56ca6416422c686d0"
+    "revision": "8a1d0af50eba58f0bfb74bb012453418"
   },
   {
     "url": "icons/ios/icon_1024x1024.png",
@@ -84,35 +84,35 @@ const fileManifest = [
   },
   {
     "url": "icons/other/icon_150x150.png",
-    "revision": "10574dee246af4e3d2300a8148ea397d"
+    "revision": "c1a7c975af51bbbe74e8801b74ad220d"
   },
   {
     "url": "icons/other/icon_16x16.png",
-    "revision": "f3f813607fced982a62f0c4ba65b7ab2"
+    "revision": "d4febc81302e0f153777b005534c2a98"
   },
   {
     "url": "icons/other/icon_192x192.png",
-    "revision": "b2e3fd1114f011e1b9209dffe9c611b2"
+    "revision": "471249a031dd085165e733880c5f9d2f"
   },
   {
     "url": "icons/other/icon_310x310.png",
-    "revision": "e00de42fb9c6ffaea17da1837e00ba08"
+    "revision": "3ffee08a08a75108358516f3d2ea790a"
   },
   {
     "url": "icons/other/icon_32x32.png",
-    "revision": "befc766e8dab6a5f0fb64073d8b71f34"
+    "revision": "1c7b09b263d89431366672b42bfa079f"
   },
   {
     "url": "icons/other/icon_70x70.png",
-    "revision": "5a49ed3b4cc8082b18132fa542dd4b62"
+    "revision": "24a8937b04f35f3456b5d8c17f742970"
   },
   {
     "url": "index.html",
-    "revision": "bb9819bef561a83a83ecc7ffa808a78b"
+    "revision": "f3db3bb197d7d53484b8a14f81e668dd"
   },
   {
-    "url": "js/app-597d9f8d18f67eb83db8.js",
-    "revision": "05680f6bf2f7d1014654aaed7cf1e2cc"
+    "url": "js/app-d243c6fa41798cf73648.js",
+    "revision": "1fa0ac85fba56d9e5c997db4f3f9c357"
   },
   {
     "url": "offline.html",
