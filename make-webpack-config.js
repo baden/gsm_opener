@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const workboxPlugin = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 
 const DIST_DIR = 'dist';
@@ -20,11 +21,59 @@ module.exports = function({ isProd }) {
     }]),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin("styles.css"),
+
+    new WebpackPwaManifest({
+      name: "Progressive GSM-opener",
+      short_name: "GSM opener",
+      description: "GSM-opener control",
+      lang: "en-US",
+      display: "fullscreen",
+      orientation: "portrait",
+      start_url: './',
+      background_color: '#eee',
+      theme_color: "#eee",
+      'theme-color': '#eee',
+      icons: [
+        {
+          src: path.resolve('src/logo.png'),
+          sizes: [57, 60, 76, 114, 120, 152, 167, 180, 1024],
+          destination: path.join('icons', 'ios'),
+          ios: true
+        },
+        {
+          src: path.resolve('src/logo.png'),
+          size: 1024,
+          destination: path.join('icons', 'ios'),
+          ios: 'startup'
+        },
+        {
+          src: path.resolve('src/logo.png'),
+          sizes: [36, 48, 72, 96, 144, 192, 512],
+          destination: path.join('icons', 'android')
+        },
+        {
+          src: path.resolve('src/logo.png'),
+          // sizes: [16, 32, 57, 60, 72, 76, 96, 114, 120, 144, 152, 180, 192, 256, 512],
+          sizes: [16, 32, 70, 150, 192, 310],
+          destination: path.join('icons', 'other')
+        },
+      ],
+      ios: {
+        // 'apple-mobile-web-app-status-bar-style': 'black',
+        // 'apple-mobile-web-app-title': 'GSM opener',
+        'apple-mobile-web-app-status-bar-style': '#434345',
+      },
+      fingerprints: false,
+    }),
+
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      inject: 'body',
-      filename: 'index.html'
+      // inject: 'body',
+      inject: true,
+      filename: 'index.html',
+      minify: { collapseWhitespace: true },
     }),
+
 
     //  TODO: Look at
     // https://github.com/electrode-samples/electrode-pwa-examples/blob/d5c15d2aff5f835ba088e90202329976ae2e7dd7/examples/product/config/sw-config.js

@@ -26,3 +26,4 @@ TODO:
 
 https://github.com/web-push-libs/webpush-java/blob/master/doc/UsageExample.md
 https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
+https://www.npmjs.com/package/webpack-svgstore-plugin

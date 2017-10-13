@@ -13,8 +13,6 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
     <!-- <base href="/gsm_opener/"> -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="manifest" href="manifest.json">
 
     <title>GSM opener</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -23,25 +21,22 @@
       rel="stylesheet"> -->
 
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="GSM opener">
-    <meta name="apple-mobile-web-app-title" content="GSM opener">
     <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+    <!-- <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec"> -->
     <meta name="msapplication-navbutton-color" content="#ffe3ff">
     <meta name="msapplication-starturl" content="./index.html">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
-    <link rel="manifest" href="./manifest.json">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/other/icon_32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/other/icon_16x16.png">
     <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="theme-color" content="#ffe400">
+
 </head>
 
 <body style="padding:0; margin:0;-webkit-flex:1">
     <!-- <div class="header" style="width: 100%; height: 64px; background-color: blue"></div> -->
-    <section id="elm-app"> TBD33 </section>
+    <section id="elm-app"> TBD36 </section>
 
     <div style="text-align: center; padding-top:100px">
         <i class="material-icons" style="font-size: 128px">face</i>
@@ -88,24 +83,6 @@
           console.log(err);
         });
       }
-
-      if(window.applicationCache){
-        // var appCache = window.applicationCache;
-        window.addEventListener('load', function(e) {
-          window.applicationCache.addEventListener('updateready', function() {
-            if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-              // alert('found new version!');
-              // window.applicationCache.swapCache();
-              if (confirm('Доступна новая версия сайта. Перезагрузить страницу?')) {
-                window.location.reload();
-              }
-            } else {
-              // Manifest didn't changed. Nothing new to server.
-            }
-          }, false);
-        }, false);
-      }
-
 
       </script>
 </body>

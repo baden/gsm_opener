@@ -15,6 +15,7 @@
     "build": "npm run build:prod",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
+    "deploy:opts": "node ./deploy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -45,6 +46,7 @@
     "url-loader": "^0.6.2",
     "webpack": "^3.7.1",
     "webpack-dev-server": "^2.9.1",
+    "webpack-pwa-manifest": "^3.3.2",
     "workbox-webpack-plugin": "^2.1.0"
   }
 }
