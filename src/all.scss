@@ -1,1 +1,39 @@
 // @import "fonts/material-icons.css";
+
+#elm-app {
+    display: -webkit-inline-box;
+}
+
+ul.device_list {
+    // max-width: 200px;
+    list-style-type: none;
+    margin-left: 0px;
+    margin-right: 50px;
+}
+
+li.device {
+    border: 1px solid blue;
+    padding: 2px;
+    margin: 2px;
+    // max-width: 200px;
+
+    display: grid;
+    grid-template-columns: 100px auto 30px;
+    vertical-align: middle;
+
+}
+
+button.control {
+    padding: 0;
+    margin: 0;
+
+    i {
+        line-height: 0.1;
+        vertical-align: middle;
+    }
+}
+
+
+i.material-icons {
+    vertical-align: middle;
+}

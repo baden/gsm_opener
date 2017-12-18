@@ -9,6 +9,9 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import WS
 import Json.Encode as JE
+import Task
+import Time exposing (Time)
+import Process
 
 
 main : Program Never Model Msg
@@ -26,6 +29,11 @@ echoServer =
     "ws://localhost:9112/websocket"
 
 
+type ConnectStatus
+    = CS_Disconnected
+    | CS_Connected
+
+
 
 -- MODEL
 
@@ -34,12 +42,19 @@ type alias Model =
     { input : String
     , messages : List String
     , links : List String
+    , connectStatus : ConnectStatus
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model "" [] [], Cmd.none )
+    ( { input = ""
+      , messages = []
+      , links = []
+      , connectStatus = CS_Disconnected
+      }
+    , Cmd.batch [ delay (Time.second * 1) Connect ]
+    )
 
 
 
@@ -50,6 +65,7 @@ type Msg
     = Input String
     | Connect
     | Send
+    | Unlink String
     | WebsocketOpen String
     | WebsocketClose String
     | WebsocketMessage String
@@ -62,6 +78,13 @@ listingDetailsRequest url =
         [ ( "url", JE.string url )
         , ( "mobile", JE.bool False ) -- TODO: Either re-wire up a mobile flag when mobile layout is back, or remove this
         ]
+
+
+delay : Time -> msg -> Cmd msg
+delay time msg =
+    Process.sleep time
+        |> Task.andThen (always <| Task.succeed msg)
+        |> Task.perform identity
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -79,31 +102,57 @@ update msg model =
 
         Send ->
             let
+                newLinks =
+                    model.links ++ [ model.input ]
+
                 a =
                     JE.object
                         [ ( "cmd", JE.string "link" )
                         , ( "params"
-                          , JE.list
-                                [ JE.string model.input
-                                ]
+                          , JE.list <|
+                                (newLinks |> List.map (\l -> JE.string l))
                           )
                         ]
             in
-                ( { model | input = "", links = model.links ++ [ model.input ] }, WS.websocketSend a )
+                ( { model | input = "", links = newLinks }, WS.websocketSend a )
+
+        Unlink id ->
+            let
+                _ =
+                    Debug.log "Unlink" id
+
+                newLinks =
+                    -- List.filter (\l -> l /= id) model.links
+                    List.filter ((/=) id) model.links
+
+                a =
+                    JE.object
+                        [ ( "cmd", JE.string "link" )
+                        , ( "params"
+                          , JE.list <|
+                                (newLinks |> List.map (\l -> JE.string l))
+                          )
+                        ]
+            in
+                ( { model | links = newLinks }, WS.websocketSend a )
 
         WebsocketOpen str ->
             let
                 _ =
                     Debug.log "WebsocketOpen" str
             in
-                ( model, Cmd.none )
+                ( { model | connectStatus = CS_Connected }, Cmd.none )
 
         WebsocketClose str ->
             let
                 _ =
                     Debug.log "WebsocketClose" str
             in
-                ( model, Cmd.none )
+                ( { model | connectStatus = CS_Disconnected }
+                , Cmd.batch
+                    [ delay (Time.second * 5) Connect
+                    ]
+                )
 
         WebsocketMessage str ->
             let
@@ -124,33 +173,98 @@ update msg model =
 -- VIEW
 
 
-linkitem : String -> Html a
-linkitem i =
-    li [] [ text i ]
-
-
 view : Model -> Html Msg
 view model =
-    div []
-        [ div []
-            [ button [ onClick Connect ] [ text "Connect" ] ]
-        , div
-            []
-            [ input [ onInput Input, value model.input ] []
-            , button [ onClick Send ] [ text <| "Link to " ++ model.input ]
-            , div [] (List.map viewMessage (List.reverse model.messages))
+    let
+        styles =
+            case model.connectStatus of
+                CS_Connected ->
+                    []
+
+                _ ->
+                    [ ( "pointer-events", "none" ), ( "opacity", "0.3" ) ]
+
+        disabledLink =
+            case model.input of
+                "" ->
+                    True
+
+                id ->
+                    List.member id model.links
+    in
+        div []
+            [ div []
+                [ view_connectStatus model.connectStatus ]
+            , div
+                [ style styles ]
+                [ input [ onInput Input, value model.input ] []
+                , button [ onClick Send, disabled disabledLink ] [ text <| "Link to " ++ model.input ]
+                , div [] (List.map viewMessage (List.reverse model.messages))
+                ]
+            , div []
+                [ p [] [ text "Links:" ]
+                , ul [ class "device_list" ] <|
+                    (model.links |> List.map viewDevice)
+                ]
             ]
-        , div []
-            [ p [] [ text "Links:" ]
-            , ul [] <|
-                (model.links |> List.map linkitem)
+
+
+closeIcon : String -> Html Msg
+closeIcon id =
+    i [ class "material-icons", style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ], title "Удалить", onClick <| Unlink id ] [ text "close" ]
+
+
+conrtolIcon : String -> Html Msg
+conrtolIcon id =
+    i [ class "material-icons", style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ], title "Активировать/Деактивировать" ] [ text "face" ]
+
+
+inputIcon : String -> Html Msg
+inputIcon id =
+    i [ class "material-icons", style [ ( "color", "green" ), ( "font-size", "18px" ) ], title "Вход 1" ] [ text "spa" ]
+
+
+viewDevice : String -> Html Msg
+viewDevice id =
+    li [ class "device" ]
+        [ span []
+            [ text <| "ID: " ++ id
             ]
+        , span []
+            [ text "Входы: "
+            , inputIcon id
+            , inputIcon id
+            , inputIcon id
+            , inputIcon id
+            , text " Выходы: "
+            , button [ class "control" ] [ conrtolIcon id ]
+            , button [ class "control" ] [ conrtolIcon id ]
+            , button [ class "control" ] [ conrtolIcon id ]
+            , button [ class "control" ] [ conrtolIcon id ]
+            ]
+        , closeIcon id
         ]
 
 
 viewMessage : String -> Html msg
 viewMessage msg =
     div [] [ text msg ]
+
+
+view_connectStatus : ConnectStatus -> Html a
+view_connectStatus cs =
+    let
+        color =
+            case cs of
+                CS_Disconnected ->
+                    "#d20000"
+
+                CS_Connected ->
+                    "#00d200"
+    in
+        div [ title "Состояние подключения к серверу" ]
+            [ i [ class "material-icons", style [ ( "font-size", "32px" ), ( "color", color ) ] ] [ text "wifi" ]
+            ]
 
 
 

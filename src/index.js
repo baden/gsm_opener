@@ -3,12 +3,12 @@ require('./all.scss');
 var elm_app = require('./app');
 // module.exports = Elm.App.emded;
 
-console.log("WIP3", elm_app);
+// console.log("WIP3", elm_app);
 
 var app_element = document.getElementById('elm-app');
 var App = elm_app(app_element);
 
-console.log("App=", App);
+// console.log("App=", App);
 
 
 const ws_server = "ws://localhost:9112/websocket";
@@ -62,7 +62,7 @@ App.ports.websocketSend.subscribe(function(data) {
     websocket.send(JSON.stringify(data));
 });
 
-connect();
+// connect();
 
 // setInterval(function() {
 //     console.log("boo");

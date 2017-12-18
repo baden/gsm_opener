@@ -1,6 +1,6 @@
 const Elm = require('./App/App.elm');
 
-console.log("Elm=", Elm, Elm.ports);
+// console.log("Elm=", Elm, Elm.ports);
 
 // Elm.Main.
 
