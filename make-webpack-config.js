@@ -6,9 +6,16 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 
+
 const DIST_DIR = 'dist';
 
 const outputPath = path.resolve(__dirname, DIST_DIR);
+
+function hasProcessFlag(flag) {
+  return process.argv.join('').indexOf(flag) > -1;
+}
+
+const HMR = hasProcessFlag('hot');
 
 module.exports = function({ isProd }) {
   console.log("Booooooooo", isProd);
@@ -154,6 +161,15 @@ module.exports = function({ isProd }) {
           ]
           // loader: "file?name=[name].[ext]"
           // loader: 'url-loader?mimetype=applicationfont-woff2&name=fonts/[name].[ext]'
+        },
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          use:
+            HMR?
+              ['elm-hot-loader', {loader: 'elm-webpack-loader', options: {debug: true, warn: true, verbose: true}}]
+            :
+              ['elm-webpack-loader']
         }
       ]
     },

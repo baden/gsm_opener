@@ -1,6 +1,67 @@
 require('./all.scss');
 
-console.log("WIP3");
+var elm_app = require('./app');
+// module.exports = Elm.App.emded;
+
+console.log("WIP3", elm_app);
+
+var app_element = document.getElementById('elm-app');
+var App = elm_app(app_element);
+
+console.log("App=", App);
+
+
+const ws_server = "ws://localhost:9112/websocket";
+
+
+var websocket;
+
+function connect()
+{
+    websocket = new WebSocket(ws_server);
+    websocket.onopen = function(evt) { onOpen(evt) };
+    websocket.onclose = function(evt) { onClose(evt) };
+    websocket.onmessage = function(evt) { onMessage(evt) };
+    websocket.onerror = function(evt) { onError(evt) };
+};
+
+function disconnect() {
+    websocket.close();
+};
+
+function onOpen(evt) {
+    App.ports.websocketOpen.send("Open");
+};
+
+function onClose(evt) {
+    App.ports.websocketClose.send("Close");
+};
+
+function onMessage(evt) {
+    var msg = evt.data;
+    App.ports.websocketMessage.send(msg);
+};
+
+function onError(evt) {
+    App.ports.websocketError.send("Error");
+};
+
+
+App.ports.websocketConnect.subscribe(function(data) {
+    console.log("websocketConnect", data);
+    connect();
+})
+
+App.ports.websocketDisconnect.subscribe(function(data) {
+    console.log("websocketDisconnect", data);
+})
+
+// setInterval(function() {
+//     console.log("boo");
+//     App.ports.websocketConnect.send("Hallo");
+//
+// }, 3000);
+
 
 // require('./all.scss');
 // require('bootstrap-css');
