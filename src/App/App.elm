@@ -7,7 +7,6 @@ module Main exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import WebSocket
 import WS
 import Json.Encode as JE
 
@@ -34,12 +33,13 @@ echoServer =
 type alias Model =
     { input : String
     , messages : List String
+    , links : List String
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model "" [], Cmd.none )
+    ( Model "" [] [], Cmd.none )
 
 
 
@@ -50,7 +50,6 @@ type Msg
     = Input String
     | Connect
     | Send
-    | NewMessage String
     | WebsocketOpen String
     | WebsocketClose String
     | WebsocketMessage String
@@ -66,59 +65,68 @@ listingDetailsRequest url =
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { input, messages } =
+update msg model =
     case msg of
         Input newInput ->
-            ( Model newInput messages, Cmd.none )
+            ( { model | input = newInput }, Cmd.none )
 
         Connect ->
-            ( Model "" messages
+            ( model
             , Cmd.batch
                 [ WS.websocketConnect <| listingDetailsRequest "bbb"
                 ]
             )
 
         Send ->
-            ( Model "" messages, WebSocket.send echoServer input )
-
-        NewMessage str ->
             let
-                _ =
-                    Debug.log "NewMessage" 0
+                a =
+                    JE.object
+                        [ ( "cmd", JE.string "link" )
+                        , ( "params"
+                          , JE.list
+                                [ JE.string model.input
+                                ]
+                          )
+                        ]
             in
-                ( Model input (str :: messages), Cmd.none )
+                ( { model | input = "", links = model.links ++ [ model.input ] }, WS.websocketSend a )
 
         WebsocketOpen str ->
             let
                 _ =
                     Debug.log "WebsocketOpen" str
             in
-                ( Model "" messages, Cmd.none )
+                ( model, Cmd.none )
 
         WebsocketClose str ->
             let
                 _ =
                     Debug.log "WebsocketClose" str
             in
-                ( Model "" messages, Cmd.none )
+                ( model, Cmd.none )
 
         WebsocketMessage str ->
             let
                 _ =
                     Debug.log "WebsocketMessage" str
             in
-                ( Model "" messages, Cmd.none )
+                ( model, Cmd.none )
 
         WebsocketError str ->
             let
                 _ =
                     Debug.log "WebsocketError" str
             in
-                ( Model "" messages, Cmd.none )
+                ( model, Cmd.none )
 
 
 
 -- VIEW
+
+
+linkitem : String -> Html a
+linkitem i =
+    li [] [ text i ]
 
 
 view : Model -> Html Msg
@@ -129,9 +137,13 @@ view model =
         , div
             []
             [ input [ onInput Input, value model.input ] []
-            , button [ onClick Send ] [ text "Link" ]
-            , button [ onClick Send ] [ text "Link" ]
+            , button [ onClick Send ] [ text <| "Link to " ++ model.input ]
             , div [] (List.map viewMessage (List.reverse model.messages))
+            ]
+        , div []
+            [ p [] [ text "Links:" ]
+            , ul [] <|
+                (model.links |> List.map linkitem)
             ]
         ]
 
@@ -148,8 +160,7 @@ viewMessage msg =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ WebSocket.listen echoServer NewMessage
-        , WS.websocketOpen WebsocketOpen
+        [ WS.websocketOpen WebsocketOpen
         , WS.websocketClose WebsocketClose
         , WS.websocketMessage WebsocketMessage
         , WS.websocketError WebsocketError

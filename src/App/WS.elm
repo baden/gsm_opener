@@ -30,10 +30,6 @@ port websocketError : (String -> msg) -> Sub msg
 port websocketConnect : Payload -> Cmd msg
 
 
-
--- port websocketConnect : String -> Cmd msg
-
-
 port websocketDisconnect : Payload -> Cmd msg
 
 

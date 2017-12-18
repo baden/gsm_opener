@@ -50,11 +50,19 @@ function onError(evt) {
 App.ports.websocketConnect.subscribe(function(data) {
     console.log("websocketConnect", data);
     connect();
-})
+});
 
 App.ports.websocketDisconnect.subscribe(function(data) {
     console.log("websocketDisconnect", data);
-})
+    disconnect();
+});
+
+App.ports.websocketSend.subscribe(function(data) {
+    console.log("websocketSend", data);
+    websocket.send(JSON.stringify(data));
+});
+
+connect();
 
 // setInterval(function() {
 //     console.log("boo");
