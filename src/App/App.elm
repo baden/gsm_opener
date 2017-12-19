@@ -9,12 +9,10 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import WS
 import Json.Encode as JE
-import Json.Decode as Decode exposing (Decoder)
-import Json.Decode.Pipeline as Pipeline exposing (decode, required)
 import Task
 import Time exposing (Time)
 import Process
-import Util exposing ((=>))
+import Session
 
 
 main : Program JE.Value Model Msg
@@ -52,12 +50,23 @@ type alias Model =
 init : JE.Value -> ( Model, Cmd Msg )
 init flags =
     let
+        session =
+            Session.decodeUserFromJson flags
+
         _ =
-            Debug.log "init" flags
+            Debug.log "init" session
+
+        links =
+            case session of
+                Nothing ->
+                    []
+
+                Just s ->
+                    s.links
     in
         ( { input = ""
           , messages = []
-          , links = []
+          , links = links
           , connectStatus = CS_Disconnected
           }
         , Cmd.batch [ delay (Time.second * 1) Connect ]
@@ -78,7 +87,7 @@ type Msg
     | WebsocketMessage String
     | WebsocketError String
     | SaveSession
-    | SetUser (Maybe User)
+    | SetUser (Maybe Session.User)
 
 
 listingDetailsRequest : String -> JE.Value
@@ -171,85 +180,19 @@ update msg model =
                 ( model, Cmd.none )
 
         SaveSession ->
-            ( model, storeSession { token = "notoken" } )
+            ( model, Session.storeSession { token = "notoken", links = model.links } )
 
         SetUser u ->
             let
                 _ =
                     Debug.log "SetUser" u
             in
-                ( model, Cmd.none )
+                case u of
+                    Nothing ->
+                        ( model, Cmd.none )
 
-
-type alias User =
-    { token : String
-
-    -- { email : String
-    -- , token : AuthToken
-    -- , username : Username
-    -- , bio : Maybe String
-    -- , image : UserPhoto
-    -- , createdAt : String
-    -- , updatedAt : String
-    }
-
-
-
---
---
-
-
-userDecoder : Decoder User
-userDecoder =
-    decode User
-        |> Pipeline.required "token" Decode.string
-
-
-
--- |> required "email" Decode.string
--- |> required "token" AuthToken.decoder
--- |> required "username" usernameDecoder
--- |> required "bio" (Decode.nullable Decode.string)
--- |> required "image" UserPhoto.decoder
--- |> required "createdAt" Decode.string
--- |> required "updatedAt" Decode.string
-
-
-sessionChange : Sub (Maybe User)
-sessionChange =
-    WS.onSessionChange (Decode.decodeValue userDecoder >> Result.toMaybe)
-
-
-
---
---
-
-
-resetSession =
-    WS.storeSession Nothing
-
-
-storeSession : User -> Cmd msg
-storeSession user =
-    userEncode user
-        |> JE.encode 0
-        |> Just
-        |> WS.storeSession
-
-
-userEncode : User -> JE.Value
-userEncode user =
-    JE.object
-        [ "token" => JE.string user.token
-
-        -- [ "email" => Encode.string user.email
-        -- , "token" => AuthToken.encode user.token
-        -- , "username" => encodeUsername user.username
-        -- , "bio" => EncodeExtra.maybe Encode.string user.bio
-        -- , "image" => UserPhoto.encode user.image
-        -- , "createdAt" => Encode.string user.createdAt
-        -- , "updatedAt" => Encode.string user.updatedAt
-        ]
+                    Just s ->
+                        ( { model | links = s.links }, Cmd.none )
 
 
 
@@ -365,5 +308,5 @@ subscriptions model =
         , WS.websocketClose WebsocketClose
         , WS.websocketMessage WebsocketMessage
         , WS.websocketError WebsocketError
-        , Sub.map SetUser sessionChange
+        , Sub.map SetUser Session.sessionChange
         ]
