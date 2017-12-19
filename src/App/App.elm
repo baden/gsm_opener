@@ -209,47 +209,8 @@ type alias Receive =
     }
 
 
-receiveDecoder : Decoder Receive
-receiveDecoder =
-    decode Receive
-        |> Pipeline.required "cmd" JD.string
-        |> Pipeline.required "payload" JD.value
 
-
-receive : JE.Value -> Model -> ( Model, Cmd Msg )
-receive msg model =
-    let
-        a =
-            msg
-                |> JD.decodeValue receiveDecoder
-
-        _ =
-            Debug.log "a=" a
-    in
-        case a of
-            Ok v ->
-                receiveCmd v.cmd v.payload model
-
-            _ ->
-                ( model, Cmd.none )
-
-
-receiveCmd : String -> JE.Value -> Model -> ( Model, Cmd Msg )
-receiveCmd cmd payload model =
-    let
-        _ =
-            Debug.log "CMD: " cmd
-    in
-        case cmd of
-            "update" ->
-                receiveCmdUpdate payload model
-
-            _ ->
-                let
-                    _ =
-                        Debug.log "Unexpected CMD:" cmd
-                in
-                    ( model, Cmd.none )
+-- TODO: values must have variants
 
 
 type alias ReceiveUpdate =
@@ -257,6 +218,51 @@ type alias ReceiveUpdate =
     , id : String
     , values : DeviceInfo
     }
+
+
+type ReceiveCmd
+    = Update__ ReceiveUpdate
+    | Nothing__
+
+
+receiveDecoder : Decoder ReceiveCmd
+receiveDecoder =
+    decode toReceiveItem
+        |> Pipeline.required "cmd" JD.string
+        |> Pipeline.required "payload" JD.value
+        |> Pipeline.resolve
+
+
+toReceiveItem : String -> JE.Value -> Decoder ReceiveCmd
+toReceiveItem cmd payload =
+    case cmd of
+        "update" ->
+            case payload |> JD.decodeValue receiveCmdUpdateDecoder of
+                Ok ru ->
+                    JD.succeed <| Update__ ru
+
+                Err _ ->
+                    JD.fail "Error parse updare payload"
+
+        _ ->
+            JD.fail "Unknows cmd"
+
+
+receive : JE.Value -> Model -> ( Model, Cmd Msg )
+receive msg model =
+    case JD.decodeValue receiveDecoder msg of
+        Ok (Update__ u) ->
+            ( { model | devices = Dict.insert u.id u.values model.devices }, Cmd.none )
+
+        Ok Nothing__ ->
+            ( model, Cmd.none )
+
+        Err _ ->
+            ( model, Cmd.none )
+
+
+
+-- values должен иметь множественный тип, зависящий от поля "name". Используйте Pipeline.resolve как выше.
 
 
 receiveCmdUpdateDecoder : Decoder ReceiveUpdate
@@ -276,46 +282,6 @@ docItemDecoder : Decoder DeviceInfo
 docItemDecoder =
     decode DeviceInfo
         |> Pipeline.required "connected" JD.bool
-
-
-receiveCmdUpdate : JE.Value -> Model -> ( Model, Cmd Msg )
-receiveCmdUpdate payload model =
-    let
-        a =
-            payload
-                |> JD.decodeValue receiveCmdUpdateDecoder
-    in
-        case a of
-            Ok d ->
-                doUpdate d model
-
-            _ ->
-                ( model, Cmd.none )
-
-
-doUpdate : ReceiveUpdate -> Model -> ( Model, Cmd Msg )
-doUpdate d model =
-    let
-        name =
-            d.name
-
-        id =
-            d.id
-
-        values =
-            d.values
-
-        devicesBefore =
-            model.devices
-
-        _ =
-            Debug.log "update: " d
-    in
-        ( { model | devices = Dict.insert id values devicesBefore }, Cmd.none )
-
-
-
--- VIEW
 
 
 view : Model -> Html Msg
