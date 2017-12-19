@@ -9,14 +9,17 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import WS
 import Json.Encode as JE
+import Json.Decode as Decode exposing (Decoder)
+import Json.Decode.Pipeline as Pipeline exposing (decode, required)
 import Task
 import Time exposing (Time)
 import Process
+import Util exposing ((=>))
 
 
-main : Program Never Model Msg
+main : Program JE.Value Model Msg
 main =
-    Html.program
+    Html.programWithFlags
         { init = init
         , view = view
         , update = update
@@ -46,15 +49,19 @@ type alias Model =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( { input = ""
-      , messages = []
-      , links = []
-      , connectStatus = CS_Disconnected
-      }
-    , Cmd.batch [ delay (Time.second * 1) Connect ]
-    )
+init : JE.Value -> ( Model, Cmd Msg )
+init flags =
+    let
+        _ =
+            Debug.log "init" flags
+    in
+        ( { input = ""
+          , messages = []
+          , links = []
+          , connectStatus = CS_Disconnected
+          }
+        , Cmd.batch [ delay (Time.second * 1) Connect ]
+        )
 
 
 
@@ -70,6 +77,8 @@ type Msg
     | WebsocketClose String
     | WebsocketMessage String
     | WebsocketError String
+    | SaveSession
+    | SetUser (Maybe User)
 
 
 listingDetailsRequest : String -> JE.Value
@@ -85,6 +94,21 @@ delay time msg =
     Process.sleep time
         |> Task.andThen (always <| Task.succeed msg)
         |> Task.perform identity
+
+
+wsSendLinks : List String -> Cmd Msg
+wsSendLinks ls =
+    let
+        payload =
+            JE.object
+                [ ( "cmd", JE.string "link" )
+                , ( "params"
+                  , JE.list <|
+                        (ls |> List.map (\l -> JE.string l))
+                  )
+                ]
+    in
+        WS.websocketSend payload
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -104,44 +128,22 @@ update msg model =
             let
                 newLinks =
                     model.links ++ [ model.input ]
-
-                a =
-                    JE.object
-                        [ ( "cmd", JE.string "link" )
-                        , ( "params"
-                          , JE.list <|
-                                (newLinks |> List.map (\l -> JE.string l))
-                          )
-                        ]
             in
-                ( { model | input = "", links = newLinks }, WS.websocketSend a )
+                ( { model | input = "", links = newLinks }, wsSendLinks newLinks )
 
         Unlink id ->
             let
-                _ =
-                    Debug.log "Unlink" id
-
                 newLinks =
-                    -- List.filter (\l -> l /= id) model.links
                     List.filter ((/=) id) model.links
-
-                a =
-                    JE.object
-                        [ ( "cmd", JE.string "link" )
-                        , ( "params"
-                          , JE.list <|
-                                (newLinks |> List.map (\l -> JE.string l))
-                          )
-                        ]
             in
-                ( { model | links = newLinks }, WS.websocketSend a )
+                ( { model | links = newLinks }, wsSendLinks newLinks )
 
         WebsocketOpen str ->
             let
                 _ =
                     Debug.log "WebsocketOpen" str
             in
-                ( { model | connectStatus = CS_Connected }, Cmd.none )
+                ( { model | connectStatus = CS_Connected }, wsSendLinks model.links )
 
         WebsocketClose str ->
             let
@@ -167,6 +169,87 @@ update msg model =
                     Debug.log "WebsocketError" str
             in
                 ( model, Cmd.none )
+
+        SaveSession ->
+            ( model, storeSession { token = "notoken" } )
+
+        SetUser u ->
+            let
+                _ =
+                    Debug.log "SetUser" u
+            in
+                ( model, Cmd.none )
+
+
+type alias User =
+    { token : String
+
+    -- { email : String
+    -- , token : AuthToken
+    -- , username : Username
+    -- , bio : Maybe String
+    -- , image : UserPhoto
+    -- , createdAt : String
+    -- , updatedAt : String
+    }
+
+
+
+--
+--
+
+
+userDecoder : Decoder User
+userDecoder =
+    decode User
+        |> Pipeline.required "token" Decode.string
+
+
+
+-- |> required "email" Decode.string
+-- |> required "token" AuthToken.decoder
+-- |> required "username" usernameDecoder
+-- |> required "bio" (Decode.nullable Decode.string)
+-- |> required "image" UserPhoto.decoder
+-- |> required "createdAt" Decode.string
+-- |> required "updatedAt" Decode.string
+
+
+sessionChange : Sub (Maybe User)
+sessionChange =
+    WS.onSessionChange (Decode.decodeValue userDecoder >> Result.toMaybe)
+
+
+
+--
+--
+
+
+resetSession =
+    WS.storeSession Nothing
+
+
+storeSession : User -> Cmd msg
+storeSession user =
+    userEncode user
+        |> JE.encode 0
+        |> Just
+        |> WS.storeSession
+
+
+userEncode : User -> JE.Value
+userEncode user =
+    JE.object
+        [ "token" => JE.string user.token
+
+        -- [ "email" => Encode.string user.email
+        -- , "token" => AuthToken.encode user.token
+        -- , "username" => encodeUsername user.username
+        -- , "bio" => EncodeExtra.maybe Encode.string user.bio
+        -- , "image" => UserPhoto.encode user.image
+        -- , "createdAt" => Encode.string user.createdAt
+        -- , "updatedAt" => Encode.string user.updatedAt
+        ]
 
 
 
@@ -194,17 +277,21 @@ view model =
     in
         div []
             [ div []
-                [ view_connectStatus model.connectStatus ]
-            , div
-                [ style styles ]
-                [ input [ onInput Input, value model.input ] []
-                , button [ onClick Send, disabled disabledLink ] [ text <| "Link to " ++ model.input ]
-                , div [] (List.map viewMessage (List.reverse model.messages))
+                [ view_connectStatus model.connectStatus
+                , button [ onClick SaveSession ] [ text <| "Save" ]
                 ]
-            , div []
-                [ p [] [ text "Links:" ]
-                , ul [ class "device_list" ] <|
-                    (model.links |> List.map viewDevice)
+            , div [ style styles ]
+                [ div
+                    []
+                    [ input [ onInput Input, value model.input ] []
+                    , button [ onClick Send, disabled disabledLink ] [ text <| "Link to " ++ model.input ]
+                    , div [] (List.map viewMessage (List.reverse model.messages))
+                    ]
+                , div []
+                    [ p [] [ text "Links:" ]
+                    , ul [ class "device_list" ] <|
+                        (model.links |> List.map viewDevice)
+                    ]
                 ]
             ]
 
@@ -278,4 +365,5 @@ subscriptions model =
         , WS.websocketClose WebsocketClose
         , WS.websocketMessage WebsocketMessage
         , WS.websocketError WebsocketError
+        , Sub.map SetUser sessionChange
         ]

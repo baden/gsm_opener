@@ -6,7 +6,7 @@ var elm_app = require('./app');
 // console.log("WIP3", elm_app);
 
 var app_element = document.getElementById('elm-app');
-var App = elm_app(app_element);
+var App = elm_app(app_element, localStorage.session || null);
 
 // console.log("App=", App);
 
@@ -61,6 +61,18 @@ App.ports.websocketSend.subscribe(function(data) {
     console.log("websocketSend", data);
     websocket.send(JSON.stringify(data));
 });
+
+App.ports.storeSession.subscribe(function(session) {
+    console.log("storeSession", session);
+    localStorage.session = session;
+});
+
+window.addEventListener("storage", function(event) {
+    console.log("onStorage", event);
+    if (event.storageArea === localStorage && event.key === "session") {
+        App.ports.onSessionChange.send(event.newValue);
+    }
+}, false);
 
 // connect();
 

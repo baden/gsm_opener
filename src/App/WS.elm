@@ -36,18 +36,7 @@ port websocketDisconnect : Payload -> Cmd msg
 port websocketSend : Payload -> Cmd msg
 
 
+port storeSession : Maybe String -> Cmd msg
 
--- -- Receive from JS (Sub)
---
---
--- port websocketReceive : (( Topic, Event, Payload ) -> msg) -> Sub msg
---
---
---
--- -- Send to JS (Cmd)
---
---
--- port websocketSend : ( Topic, Event, Payload ) -> Cmd msg
---
---
--- port websocketListen : ( Topic, Event ) -> Cmd msg
+
+port onSessionChange : (Json.Encode.Value -> msg) -> Sub msg
