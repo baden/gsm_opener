@@ -21,6 +21,10 @@ li.device {
     grid-template-columns: 100px auto 30px;
     vertical-align: middle;
 
+    span:first-child {
+        text-align: left;
+    }
+
 }
 
 button.control {

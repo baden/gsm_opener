@@ -11,8 +11,7 @@ var App = elm_app(app_element, localStorage.session || null);
 
 // console.log("App=", App);
 
-
-const ws_server = "ws://localhost:9112/websocket";
+const ws_server = "ws://" + location.hostname +":9112/websocket";
 
 
 var websocket;

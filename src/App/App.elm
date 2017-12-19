@@ -13,6 +13,7 @@ import Task
 import Time exposing (Time)
 import Process
 import Session
+import Dict
 
 
 main : Program JE.Value Model Msg
@@ -35,6 +36,11 @@ type ConnectStatus
     | CS_Connected
 
 
+type alias DeviceInfo =
+    { online : Bool
+    }
+
+
 
 -- MODEL
 
@@ -44,6 +50,7 @@ type alias Model =
     , messages : List String
     , links : List String
     , connectStatus : ConnectStatus
+    , devices : Dict.Dict String DeviceInfo
     }
 
 
@@ -68,6 +75,7 @@ init flags =
           , messages = []
           , links = links
           , connectStatus = CS_Disconnected
+          , devices = Dict.empty
           }
         , Cmd.batch [ delay (Time.second * 1) Connect ]
         )
@@ -239,6 +247,11 @@ view model =
             ]
 
 
+connectionIcon : String -> Html Msg
+connectionIcon id =
+    i [ class "material-icons", style [ ( "font-size", "18px" ), ( "color", "red" ) ] ] [ text "wifi" ]
+
+
 closeIcon : String -> Html Msg
 closeIcon id =
     i [ class "material-icons", style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ], title "Удалить", onClick <| Unlink id ] [ text "close" ]
@@ -258,7 +271,8 @@ viewDevice : String -> Html Msg
 viewDevice id =
     li [ class "device" ]
         [ span []
-            [ text <| "ID: " ++ id
+            [ connectionIcon id
+            , text <| "ID: " ++ id
             ]
         , span []
             [ text "Входы: "
