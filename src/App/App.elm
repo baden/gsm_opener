@@ -9,6 +9,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import WS
 import Json.Encode as JE
+import Json.Decode as JD exposing (Decoder)
+import Json.Decode.Pipeline as Pipeline exposing (decode, required)
 import Task
 import Time exposing (Time)
 import Process
@@ -36,12 +38,10 @@ type ConnectStatus
     | CS_Connected
 
 
-type alias DeviceInfo =
-    { online : Bool
-    }
 
-
-
+-- type alias DeviceInfo =
+--     { online : Bool
+--     }
 -- MODEL
 
 
@@ -92,7 +92,7 @@ type Msg
     | Unlink String
     | WebsocketOpen String
     | WebsocketClose String
-    | WebsocketMessage String
+    | WebsocketMessage JE.Value
     | WebsocketError String
     | SaveSession
     | SetUser (Maybe Session.User)
@@ -178,7 +178,7 @@ update msg model =
                 _ =
                     Debug.log "WebsocketMessage" str
             in
-                ( model, Cmd.none )
+                receive str model
 
         WebsocketError str ->
             let
@@ -201,6 +201,117 @@ update msg model =
 
                     Just s ->
                         ( { model | links = s.links }, Cmd.none )
+
+
+type alias Receive =
+    { cmd : String
+    , payload : JE.Value
+    }
+
+
+receiveDecoder : Decoder Receive
+receiveDecoder =
+    decode Receive
+        |> Pipeline.required "cmd" JD.string
+        |> Pipeline.required "payload" JD.value
+
+
+receive : JE.Value -> Model -> ( Model, Cmd Msg )
+receive msg model =
+    let
+        a =
+            msg
+                |> JD.decodeValue receiveDecoder
+
+        _ =
+            Debug.log "a=" a
+    in
+        case a of
+            Ok v ->
+                receiveCmd v.cmd v.payload model
+
+            _ ->
+                ( model, Cmd.none )
+
+
+receiveCmd : String -> JE.Value -> Model -> ( Model, Cmd Msg )
+receiveCmd cmd payload model =
+    let
+        _ =
+            Debug.log "CMD: " cmd
+    in
+        case cmd of
+            "update" ->
+                receiveCmdUpdate payload model
+
+            _ ->
+                let
+                    _ =
+                        Debug.log "Unexpected CMD:" cmd
+                in
+                    ( model, Cmd.none )
+
+
+type alias ReceiveUpdate =
+    { name : String
+    , id : String
+    , values : DeviceInfo
+    }
+
+
+receiveCmdUpdateDecoder : Decoder ReceiveUpdate
+receiveCmdUpdateDecoder =
+    decode ReceiveUpdate
+        |> Pipeline.required "name" JD.string
+        |> Pipeline.required "id" JD.string
+        |> Pipeline.required "values" docItemDecoder
+
+
+type alias DeviceInfo =
+    { connected : Bool
+    }
+
+
+docItemDecoder : Decoder DeviceInfo
+docItemDecoder =
+    decode DeviceInfo
+        |> Pipeline.required "connected" JD.bool
+
+
+receiveCmdUpdate : JE.Value -> Model -> ( Model, Cmd Msg )
+receiveCmdUpdate payload model =
+    let
+        a =
+            payload
+                |> JD.decodeValue receiveCmdUpdateDecoder
+    in
+        case a of
+            Ok d ->
+                doUpdate d model
+
+            _ ->
+                ( model, Cmd.none )
+
+
+doUpdate : ReceiveUpdate -> Model -> ( Model, Cmd Msg )
+doUpdate d model =
+    let
+        name =
+            d.name
+
+        id =
+            d.id
+
+        values =
+            d.values
+
+        devicesBefore =
+            model.devices
+
+        _ =
+            Debug.log "update: " d
+    in
+        ( { model | devices = Dict.insert id values devicesBefore }, Cmd.none )
 
 
 
@@ -230,6 +341,9 @@ view model =
             [ div []
                 [ view_connectStatus model.connectStatus
                 , button [ onClick SaveSession ] [ text <| "Save" ]
+                , div []
+                    [ text <| toString <| Dict.toList model.devices
+                    ]
                 ]
             , div [ style styles ]
                 [ div

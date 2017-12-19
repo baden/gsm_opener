@@ -38,7 +38,8 @@ function onClose(evt) {
 };
 
 function onMessage(evt) {
-    var msg = evt.data;
+    var msg = JSON.parse(evt.data);
+    console.log(["msg = ", msg]);
     App.ports.websocketMessage.send(msg);
 };
 

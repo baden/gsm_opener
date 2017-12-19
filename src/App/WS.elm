@@ -24,7 +24,7 @@ port websocketOpen : (String -> msg) -> Sub msg
 port websocketClose : (String -> msg) -> Sub msg
 
 
-port websocketMessage : (String -> msg) -> Sub msg
+port websocketMessage : (Json.Encode.Value -> msg) -> Sub msg
 
 
 port websocketError : (String -> msg) -> Sub msg
