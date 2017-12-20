@@ -16,6 +16,7 @@ import Time exposing (Time)
 import Process
 import Session
 import Dict
+import Receive exposing (DeviceInfo, receiveDecoder)
 
 
 main : Program JE.Value Model Msg
@@ -203,13 +204,11 @@ update msg model =
                         ( { model | links = s.links }, Cmd.none )
 
 
-type alias Receive =
-    { cmd : String
-    , payload : JE.Value
-    }
 
-
-
+-- type alias Receive =
+--     { cmd : String
+--     , payload : JE.Value
+--     }
 -- TODO: values must have variants
 
 
@@ -220,41 +219,13 @@ type alias ReceiveUpdate =
     }
 
 
-type ReceiveCmd
-    = Update__ ReceiveUpdate
-    | Nothing__
-
-
-receiveDecoder : Decoder ReceiveCmd
-receiveDecoder =
-    decode toReceiveItem
-        |> Pipeline.required "cmd" JD.string
-        |> Pipeline.required "payload" JD.value
-        |> Pipeline.resolve
-
-
-toReceiveItem : String -> JE.Value -> Decoder ReceiveCmd
-toReceiveItem cmd payload =
-    case cmd of
-        "update" ->
-            case payload |> JD.decodeValue receiveCmdUpdateDecoder of
-                Ok ru ->
-                    JD.succeed <| Update__ ru
-
-                Err _ ->
-                    JD.fail "Error parse updare payload"
-
-        _ ->
-            JD.fail "Unknows cmd"
-
-
 receive : JE.Value -> Model -> ( Model, Cmd Msg )
 receive msg model =
     case JD.decodeValue receiveDecoder msg of
-        Ok (Update__ u) ->
-            ( { model | devices = Dict.insert u.id u.values model.devices }, Cmd.none )
+        Ok (Receive.ReceiveCmdDevice u) ->
+            ( { model | devices = Dict.insert u.id u model.devices }, Cmd.none )
 
-        Ok Nothing__ ->
+        Ok Receive.ReceiveCmdUnexpected ->
             ( model, Cmd.none )
 
         Err _ ->
@@ -262,26 +233,7 @@ receive msg model =
 
 
 
--- values должен иметь множественный тип, зависящий от поля "name". Используйте Pipeline.resolve как выше.
-
-
-receiveCmdUpdateDecoder : Decoder ReceiveUpdate
-receiveCmdUpdateDecoder =
-    decode ReceiveUpdate
-        |> Pipeline.required "name" JD.string
-        |> Pipeline.required "id" JD.string
-        |> Pipeline.required "values" docItemDecoder
-
-
-type alias DeviceInfo =
-    { connected : Bool
-    }
-
-
-docItemDecoder : Decoder DeviceInfo
-docItemDecoder =
-    decode DeviceInfo
-        |> Pipeline.required "connected" JD.bool
+-- View
 
 
 view : Model -> Html Msg
