@@ -17,6 +17,7 @@ type ReceiveCmd
 type alias DeviceInfo =
     { id : String
     , connected : Bool
+    , counter : String
     }
 
 
@@ -25,6 +26,7 @@ deviceInfoDecoder =
     decode DeviceInfo
         |> Pipeline.required "id" JD.string
         |> Pipeline.required "connected" JD.bool
+        |> Pipeline.optional "counter" JD.string ""
 
 
 
