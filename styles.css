@@ -1,2 +1,29 @@
+#elm-app {
+  display: -webkit-inline-box; }
+
+ul.device_list {
+  list-style-type: none;
+  margin-left: 0px;
+  margin-right: 50px; }
+
+li.device {
+  border: 1px solid blue;
+  padding: 2px;
+  margin: 2px;
+  display: grid;
+  grid-template-columns: 100px auto 30px;
+  vertical-align: middle; }
+  li.device span:first-child {
+    text-align: left; }
+
+button.control {
+  padding: 0;
+  margin: 0; }
+  button.control i {
+    line-height: 0.1;
+    vertical-align: middle; }
+
+i.material-icons {
+  vertical-align: middle; }
 
 /*# sourceMappingURL=styles.css.map*/

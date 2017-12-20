@@ -1,4 +1,4 @@
-importScripts('workbox-sw.prod.v2.1.0.js');
+importScripts('workbox-sw.prod.v2.1.2.js');
 
 /**
  * DO NOT EDIT THE FILE MANIFEST ENTRY
@@ -108,11 +108,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "5ae8470c724087b167fb85d493a37d1f"
+    "revision": "ab8585113a1bafd7b6b08a99b3fad3ba"
   },
   {
-    "url": "js/app-1305ffda9e49d73e7cca.js",
-    "revision": "3c0c7f86cf59522094b8bb23ecef38de"
+    "url": "js/app-0adc3019d4eaecdca0f1.js",
+    "revision": "2b636addee25388b719978080f3658ff"
   },
   {
     "url": "offline.html",
@@ -124,7 +124,7 @@ const fileManifest = [
   },
   {
     "url": "styles.css",
-    "revision": "4a4271f4fad9e8b158f7ee81030ad82b"
+    "revision": "6d9487fa16440c276cc82b77a1c8d56e"
   }
 ];
 

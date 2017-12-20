@@ -117,11 +117,10 @@
     }
   ],
   "name": "Progressive GSM-opener",
+  "short_name": "GSM opener",
   "orientation": "portrait",
   "display": "fullscreen",
   "start_url": "./",
-  "publicPath": null,
-  "short_name": "GSM opener",
   "description": "GSM-opener control",
   "lang": "en-US",
   "background_color": "#eee",
