@@ -294,15 +294,35 @@ view model =
                 , div []
                     [ p [] [ text "Links:" ]
                     , ul [ class "device_list" ] <|
-                        (model.links |> List.map viewDevice)
+                        (model.links
+                            |> List.map
+                                (\id ->
+                                    model.devices
+                                        |> Dict.get id
+                                        |> Maybe.withDefault (Receive.deviceDefault id)
+                                        |> viewDevice
+                                )
+                        )
                     ]
                 ]
             ]
 
 
-connectionIcon : String -> Html Msg
-connectionIcon id =
-    i [ class "material-icons", style [ ( "font-size", "18px" ), ( "color", "red" ) ] ] [ text "wifi" ]
+connectionIcon : Bool -> Html Msg
+connectionIcon connected =
+    i
+        [ class "material-icons"
+        , style
+            [ ( "font-size", "18px" )
+            , ( "color"
+              , if connected then
+                    "green"
+                else
+                    "red"
+              )
+            ]
+        ]
+        [ text "wifi" ]
 
 
 closeIcon : String -> Html Msg
@@ -320,26 +340,31 @@ inputIcon id =
     i [ class "material-icons", style [ ( "color", "green" ), ( "font-size", "18px" ) ], title "Вход 1" ] [ text "spa" ]
 
 
-viewDevice : String -> Html Msg
-viewDevice id =
+viewDevice : DeviceInfo -> Html Msg
+viewDevice d =
     li [ class "device" ]
         [ span []
-            [ connectionIcon id
-            , text <| "ID: " ++ id
+            [ connectionIcon d.connected
+            , text <| "ID: " ++ d.id
             ]
         , span []
-            [ text "Входы: "
-            , inputIcon id
-            , inputIcon id
-            , inputIcon id
-            , inputIcon id
-            , text " Выходы: "
-            , button [ class "control" ] [ conrtolIcon id ]
-            , button [ class "control" ] [ conrtolIcon id ]
-            , button [ class "control" ] [ conrtolIcon id ]
-            , button [ class "control" ] [ conrtolIcon id ]
+            [ div []
+                [ text "Входы: "
+                , inputIcon d.id
+                , inputIcon d.id
+                , inputIcon d.id
+                , inputIcon d.id
+                ]
+            , div []
+                [ text " Выходы: "
+                , button [ class "control" ] [ conrtolIcon d.id ]
+                , button [ class "control" ] [ conrtolIcon d.id ]
+                , button [ class "control" ] [ conrtolIcon d.id ]
+                , button [ class "control" ] [ conrtolIcon d.id ]
+                ]
+            , div [] [ text <| " Счетчик: " ++ d.counter ]
             ]
-        , closeIcon id
+        , closeIcon d.id
         ]
 
 

@@ -21,6 +21,14 @@ type alias DeviceInfo =
     }
 
 
+deviceDefault : String -> DeviceInfo
+deviceDefault id =
+    { id = id
+    , connected = False
+    , counter = ""
+    }
+
+
 deviceInfoDecoder : Decoder DeviceInfo
 deviceInfoDecoder =
     decode DeviceInfo
