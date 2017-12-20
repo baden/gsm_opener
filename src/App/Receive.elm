@@ -52,3 +52,12 @@ toReceiveItem k v =
 
         _ ->
             JD.fail "Unknows cmd"
+
+
+
+-- Декодер для массива объектов-сообщений
+
+
+decoder : Decoder (List ReceiveCmd)
+decoder =
+    JD.list receiveDecoder

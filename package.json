@@ -16,6 +16,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "deploy:opts": "node ./deploy.js",
+    "predeploy_ssh": "npm run build",
+    "deploy_ssh": "rsync -avze 'ssh' dist/ baden@gsmopener.baden.space:~/gsmopener/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

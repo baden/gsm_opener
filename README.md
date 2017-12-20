@@ -14,7 +14,13 @@ npm i
 npm run build
 ```
 
-## Deploy
+## Deploy on server gsmopener.baden.space
+
+```
+npm run deploy_ssh
+```
+
+## Deploy on Githup Pages
 
 ```
 npm run deploy

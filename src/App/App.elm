@@ -16,7 +16,7 @@ import Time exposing (Time)
 import Process
 import Session
 import Dict
-import Receive exposing (DeviceInfo, receiveDecoder)
+import Receive exposing (DeviceInfo)
 
 
 main : Program JE.Value Model Msg
@@ -219,15 +219,36 @@ type alias ReceiveUpdate =
     }
 
 
+
+-- Возможно в перспективе сюда нужно будет добавить массив для Cmd.batch
+
+
+receiveUpdater : Receive.ReceiveCmd -> Model -> Model
+receiveUpdater cmd model =
+    case cmd of
+        Receive.ReceiveCmdDevice d ->
+            { model | devices = Dict.insert d.id d model.devices }
+
+        Receive.ReceiveCmdUnexpected ->
+            model
+
+
 receive : JE.Value -> Model -> ( Model, Cmd Msg )
 receive msg model =
-    case JD.decodeValue receiveDecoder msg of
-        Ok (Receive.ReceiveCmdDevice u) ->
-            ( { model | devices = Dict.insert u.id u model.devices }, Cmd.none )
+    case JD.decodeValue Receive.decoder msg of
+        Ok msgs ->
+            let
+                m =
+                    msgs
+                        |> List.foldl receiveUpdater model
+            in
+                ( m, Cmd.none )
 
-        Ok Receive.ReceiveCmdUnexpected ->
-            ( model, Cmd.none )
-
+        -- Ok (Receive.ReceiveCmdDevice u) ->
+        --     ( { model | devices = Dict.insert u.id u model.devices }, Cmd.none )
+        --
+        -- Ok Receive.ReceiveCmdUnexpected ->
+        --     ( model, Cmd.none )
         Err _ ->
             ( model, Cmd.none )
 
