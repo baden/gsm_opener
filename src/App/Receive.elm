@@ -18,6 +18,10 @@ type alias DeviceInfo =
     { id : String
     , connected : Bool
     , counter : String
+    , in1 : String
+    , in2 : String
+    , in3 : String
+    , in4 : String
     }
 
 
@@ -26,6 +30,10 @@ deviceDefault id =
     { id = id
     , connected = False
     , counter = ""
+    , in1 = "-1"
+    , in2 = "-1"
+    , in3 = "-1"
+    , in4 = "-1"
     }
 
 
@@ -35,6 +43,10 @@ deviceInfoDecoder =
         |> Pipeline.required "id" JD.string
         |> Pipeline.required "connected" JD.bool
         |> Pipeline.optional "counter" JD.string ""
+        |> Pipeline.optional "in1" JD.string "-1"
+        |> Pipeline.optional "in2" JD.string "-1"
+        |> Pipeline.optional "in3" JD.string "-1"
+        |> Pipeline.optional "in4" JD.string "-1"
 
 
 

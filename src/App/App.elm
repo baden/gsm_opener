@@ -335,9 +335,28 @@ conrtolIcon id =
     i [ class "material-icons", style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ], title "Активировать/Деактивировать" ] [ text "face" ]
 
 
+
+-- TODO: Тут бып сделать только существующие состояния
+
+
 inputIcon : String -> Html Msg
-inputIcon id =
-    i [ class "material-icons", style [ ( "color", "green" ), ( "font-size", "18px" ) ], title "Вход 1" ] [ text "spa" ]
+inputIcon state =
+    let
+        color =
+            case state of
+                "-1" ->
+                    "#990"
+
+                "0" ->
+                    "red"
+
+                "1" ->
+                    "green"
+
+                _ ->
+                    "black"
+    in
+        i [ class "material-icons", style [ ( "color", color ), ( "font-size", "18px" ) ], title "Вход 1" ] [ text "spa" ]
 
 
 viewDevice : DeviceInfo -> Html Msg
@@ -350,10 +369,10 @@ viewDevice d =
         , span []
             [ div []
                 [ text "Входы: "
-                , inputIcon d.id
-                , inputIcon d.id
-                , inputIcon d.id
-                , inputIcon d.id
+                , inputIcon d.in1
+                , inputIcon d.in2
+                , inputIcon d.in3
+                , inputIcon d.in4
                 ]
             , div []
                 [ text " Выходы: "
