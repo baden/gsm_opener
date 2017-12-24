@@ -22,6 +22,10 @@ type alias DeviceInfo =
     , in2 : String
     , in3 : String
     , in4 : String
+    , out1 : String
+    , out2 : String
+    , out3 : String
+    , out4 : String
     }
 
 
@@ -34,6 +38,10 @@ deviceDefault id =
     , in2 = "-1"
     , in3 = "-1"
     , in4 = "-1"
+    , out1 = "-1"
+    , out2 = "-1"
+    , out3 = "-1"
+    , out4 = "-1"
     }
 
 
@@ -47,6 +55,10 @@ deviceInfoDecoder =
         |> Pipeline.optional "in2" JD.string "-1"
         |> Pipeline.optional "in3" JD.string "-1"
         |> Pipeline.optional "in4" JD.string "-1"
+        |> Pipeline.optional "out1" JD.string "-1"
+        |> Pipeline.optional "out2" JD.string "-1"
+        |> Pipeline.optional "out3" JD.string "-1"
+        |> Pipeline.optional "out4" JD.string "-1"
 
 
 

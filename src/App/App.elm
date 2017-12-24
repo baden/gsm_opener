@@ -97,6 +97,11 @@ type Msg
     | WebsocketError String
     | SaveSession
     | SetUser (Maybe Session.User)
+    | Control Id String
+
+
+type alias Id =
+    String
 
 
 listingDetailsRequest : String -> JE.Value
@@ -123,6 +128,23 @@ wsSendLinks ls =
                 , ( "params"
                   , JE.list <|
                         (ls |> List.map (\l -> JE.string l))
+                  )
+                ]
+    in
+        WS.websocketSend payload
+
+
+wsSendCmd : String -> String -> Cmd Msg
+wsSendCmd id cmd =
+    let
+        payload =
+            JE.object
+                [ ( "cmd", JE.string "do" )
+                , ( "params"
+                  , JE.object
+                        [ ( "id", JE.string id )
+                        , ( "cmd", JE.string cmd )
+                        ]
                   )
                 ]
     in
@@ -203,6 +225,9 @@ update msg model =
                     Just s ->
                         ( { model | links = s.links }, Cmd.none )
 
+        Control id cmd ->
+            ( model, wsSendCmd id cmd )
+
 
 
 -- type alias Receive =
@@ -280,9 +305,10 @@ view model =
             [ div []
                 [ view_connectStatus model.connectStatus
                 , button [ onClick SaveSession ] [ text <| "Save" ]
-                , div []
-                    [ text <| toString <| Dict.toList model.devices
-                    ]
+
+                -- , div []
+                --     [ text <| toString <| Dict.toList model.devices
+                --     ]
                 ]
             , div [ style styles ]
                 [ div
@@ -330,9 +356,15 @@ closeIcon id =
     i [ class "material-icons", style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ], title "Удалить", onClick <| Unlink id ] [ text "close" ]
 
 
-conrtolIcon : String -> Html Msg
-conrtolIcon id =
-    i [ class "material-icons", style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ], title "Активировать/Деактивировать" ] [ text "face" ]
+conrtolIcon : String -> String -> Html Msg
+conrtolIcon id cmd =
+    i
+        [ class "material-icons"
+        , style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ]
+        , title "Активировать/Деактивировать"
+        , onClick (Control id cmd)
+        ]
+        [ text "face" ]
 
 
 
@@ -359,31 +391,69 @@ inputIcon state =
         i [ class "material-icons", style [ ( "color", color ), ( "font-size", "18px" ) ], title "Вход 1" ] [ text "spa" ]
 
 
+outputIcon : String -> Html Msg
+outputIcon state =
+    let
+        color =
+            case state of
+                "-1" ->
+                    "#990"
+
+                "0" ->
+                    "red"
+
+                "1" ->
+                    "green"
+
+                _ ->
+                    "black"
+    in
+        i [ class "material-icons", style [ ( "color", color ), ( "font-size", "18px" ) ], title "Вход 1" ] [ text "spa" ]
+
+
+deviceHeader : DeviceInfo -> Html Msg
+deviceHeader d =
+    div [ class "device-header" ]
+        [ connectionIcon d.connected
+        , span [] [ text <| "ID: " ++ d.id ]
+        , closeIcon d.id
+        ]
+
+
+deviceBody : DeviceInfo -> Html Msg
+deviceBody d =
+    div [ class "device-body" ]
+        [ div [] [ text "Входы: " ]
+        , div []
+            [ inputIcon d.in1
+            , inputIcon d.in2
+            , inputIcon d.in3
+            , inputIcon d.in4
+            ]
+        , div [] [ text " Выходы: " ]
+        , div []
+            [ outputIcon d.out1
+            , outputIcon d.out2
+            , outputIcon d.out3
+            , outputIcon d.out4
+            ]
+        , div [] [ text " Управление: " ]
+        , div []
+            [ button [ class "control" ] [ conrtolIcon d.id "out1" ]
+            , button [ class "control" ] [ conrtolIcon d.id "out2" ]
+            , button [ class "control" ] [ conrtolIcon d.id "out3" ]
+            , button [ class "control" ] [ conrtolIcon d.id "out4" ]
+            ]
+        , div [] [ text " Счетчик: " ]
+        , div [] [ text d.counter ]
+        ]
+
+
 viewDevice : DeviceInfo -> Html Msg
 viewDevice d =
     li [ class "device" ]
-        [ span []
-            [ connectionIcon d.connected
-            , text <| "ID: " ++ d.id
-            ]
-        , span []
-            [ div []
-                [ text "Входы: "
-                , inputIcon d.in1
-                , inputIcon d.in2
-                , inputIcon d.in3
-                , inputIcon d.in4
-                ]
-            , div []
-                [ text " Выходы: "
-                , button [ class "control" ] [ conrtolIcon d.id ]
-                , button [ class "control" ] [ conrtolIcon d.id ]
-                , button [ class "control" ] [ conrtolIcon d.id ]
-                , button [ class "control" ] [ conrtolIcon d.id ]
-                ]
-            , div [] [ text <| " Счетчик: " ++ d.counter ]
-            ]
-        , closeIcon d.id
+        [ deviceHeader d
+        , deviceBody d
         ]
 
 

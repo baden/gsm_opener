@@ -4,6 +4,47 @@
     display: -webkit-inline-box;
 }
 
+.device-header {
+    display: block;
+    position: relative;
+    margin: 0 0 8px 0;
+    padding: 0 0 4px 0;
+
+    i:first-child {
+        position: absolute;
+        left: 0;
+    }
+
+    i:last-child {
+        position: absolute;
+        right: 0;
+    }
+
+    border: 0px;
+    border-bottom: 1px solid gray;
+    // box-shadow: 0px 1px 10px black;
+
+}
+
+.device-body {
+    display: grid;
+    grid-template-columns: auto auto;
+
+    div:nth-child(odd) {
+        text-align: right;
+    }
+    div:nth-child(even) {
+        text-align: left;
+    }
+
+    button.control {
+        padding: 10px;
+        margin: 2px;
+    }
+
+}
+
+
 ul.device_list {
     // max-width: 200px;
     list-style-type: none;
@@ -17,13 +58,12 @@ li.device {
     margin: 2px;
     // max-width: 200px;
 
-    display: grid;
-    grid-template-columns: 100px auto 30px;
-    vertical-align: middle;
-
-    span:first-child {
-        text-align: left;
-    }
+    // grid-template-columns: 100px auto 30px;
+    // vertical-align: middle;
+    //
+    // span:first-child {
+    //     text-align: left;
+    // }
 
 }
 

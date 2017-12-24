@@ -10,7 +10,8 @@ var app_element = document.getElementById('elm-app');
 var App = elm_app(app_element, localStorage.session || null);
 
 var ws_server;
-if(location.hostname.match(/github/)) {
+// if(location.hostname.match(/github/)) {
+if(location.hostname.match(/localhost/)) {
     ws_server = "ws://gsmopener.baden.space:9112/websocket";
 } else {
     ws_server = "ws://" + location.hostname +":9112/websocket";
