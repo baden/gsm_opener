@@ -108,11 +108,11 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "ab8585113a1bafd7b6b08a99b3fad3ba"
+    "revision": "05a3fa21ab0dda1924cdc3374d107405"
   },
   {
-    "url": "js/app-0adc3019d4eaecdca0f1.js",
-    "revision": "2b636addee25388b719978080f3658ff"
+    "url": "js/app-b42a239aa94dfc7dacff.js",
+    "revision": "518b294db827c35e926d370c76a531d8"
   },
   {
     "url": "offline.html",
@@ -124,7 +124,7 @@ const fileManifest = [
   },
   {
     "url": "styles.css",
-    "revision": "6d9487fa16440c276cc82b77a1c8d56e"
+    "revision": "b9c484ce07680151f0523a38dfccbf38"
   }
 ];
 

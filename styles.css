@@ -1,6 +1,28 @@
 #elm-app {
   display: -webkit-inline-box; }
 
+.device-header {
+  display: block;
+  position: relative;
+  margin: 0 0 8px 0;
+  padding: 0 0 4px 0;
+  border: 0px;
+  border-bottom: 1px solid gray; }
+  .device-header i:first-child {
+    position: absolute;
+    left: 0; }
+  .device-header i:last-child {
+    position: absolute;
+    right: 0; }
+
+.device-body {
+  display: grid;
+  grid-template-columns: auto auto; }
+  .device-body div:nth-child(odd) {
+    text-align: right; }
+  .device-body div:nth-child(even) {
+    text-align: left; }
+
 ul.device_list {
   list-style-type: none;
   margin-left: 0px;
@@ -9,12 +31,7 @@ ul.device_list {
 li.device {
   border: 1px solid blue;
   padding: 2px;
-  margin: 2px;
-  display: grid;
-  grid-template-columns: 100px auto 30px;
-  vertical-align: middle; }
-  li.device span:first-child {
-    text-align: left; }
+  margin: 2px; }
 
 button.control {
   padding: 0;
