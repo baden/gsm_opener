@@ -358,13 +358,16 @@ closeIcon id =
 
 conrtolIcon : String -> String -> Html Msg
 conrtolIcon id cmd =
-    i
-        [ class "material-icons"
-        , style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ]
-        , title "Активировать/Деактивировать"
-        , onClick (Control id cmd)
+    span []
+        [ i
+            [ class "material-icons"
+            , style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ]
+            , title "Активировать/Деактивировать"
+            , onClick (Control id cmd)
+            ]
+            [ text "face" ]
+        , text "4"
         ]
-        [ text "face" ]
 
 
 

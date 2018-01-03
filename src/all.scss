@@ -38,8 +38,17 @@
     }
 
     button.control {
-        padding: 10px;
+        -webkit-appearance: none;
+        appearance: none;
+        display: inline-grid;
+        border: none;
+        padding: 0;
         margin: 2px;
+        background-color: #cc0;
+        span {
+            padding: 10px;
+            margin: 2px;
+        }
     }
 
 }
@@ -65,16 +74,6 @@ li.device {
     //     text-align: left;
     // }
 
-}
-
-button.control {
-    padding: 0;
-    margin: 0;
-
-    i {
-        line-height: 0.1;
-        vertical-align: middle;
-    }
 }
 
 
