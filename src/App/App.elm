@@ -108,7 +108,8 @@ listingDetailsRequest : String -> JE.Value
 listingDetailsRequest url =
     JE.object
         [ ( "url", JE.string url )
-        , ( "mobile", JE.bool False ) -- TODO: Either re-wire up a mobile flag when mobile layout is back, or remove this
+        , ( "mobile", JE.bool False )
+          -- TODO: Either re-wire up a mobile flag when mobile layout is back, or remove this
         ]
 
 
@@ -132,6 +133,11 @@ wsSendLinks ls =
                 ]
     in
         WS.websocketSend payload
+
+
+beep : String -> Cmd Msg
+beep id_ =
+    WS.beep id_
 
 
 wsSendCmd : String -> String -> Cmd Msg
@@ -226,7 +232,7 @@ update msg model =
                         ( { model | links = s.links }, Cmd.none )
 
         Control id cmd ->
-            ( model, wsSendCmd id cmd )
+            ( model, Cmd.batch [ wsSendCmd id cmd, beep "0" ] )
 
 
 
@@ -305,10 +311,9 @@ view model =
             [ div []
                 [ view_connectStatus model.connectStatus
                 , button [ onClick SaveSession ] [ text <| "Save" ]
-
-                -- , div []
-                --     [ text <| toString <| Dict.toList model.devices
-                --     ]
+                  -- , div []
+                  --     [ text <| toString <| Dict.toList model.devices
+                  --     ]
                 ]
             , div [ style styles ]
                 [ div
@@ -356,17 +361,50 @@ closeIcon id =
     i [ class "material-icons", style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ], title "Удалить", onClick <| Unlink id ] [ text "close" ]
 
 
-conrtolIcon : String -> String -> Html Msg
-conrtolIcon id cmd =
-    span []
-        [ i
-            [ class "material-icons"
-            , style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ]
-            , title "Активировать/Деактивировать"
-            , onClick (Control id cmd)
+
+-- type alias Touch =
+--     { clientX : Float
+--     , clientY : Float
+--     }
+--
+--
+-- touchDecoder : JD.Decoder Touch
+-- touchDecoder =
+--     JD.map2 Touch
+--         (JD.field "clientX" JD.float)
+--         (JD.field "clientY" JD.float)
+--
+--
+-- eventDecoder : (Touch -> msg) -> String -> JD.Decoder msg
+-- eventDecoder msg eventKey =
+--     JD.at [ eventKey, "0" ] (JD.map msg touchDecoder)
+-- onTouchStart : (Touch -> msg) -> Attribute msg
+-- onTouchStart msg =
+--     -- on "touchstart" <| eventDecoder msg "touches"
+
+
+onTouchStart : msg -> Attribute msg
+onTouchStart msg =
+    on "touchstart" (JD.succeed msg)
+
+
+
+-- onTouchStart UserSwipeStart
+
+
+conrtolIcon : String -> Attribute msg -> String -> Html msg
+conrtolIcon label msg pclass =
+    -- div [ class "control", onClick (Control id cmd) ]
+    div [ class <| "control noselect" ++ pclass, msg ]
+        [ span []
+            [ i
+                [ class "material-icons"
+                , style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ]
+                , title "Активировать/Деактивировать"
+                ]
+                [ text "face" ]
+            , text label
             ]
-            [ text "face" ]
-        , text "4"
         ]
 
 
@@ -391,7 +429,7 @@ inputIcon state =
                 _ ->
                     "black"
     in
-        i [ class "material-icons", style [ ( "color", color ), ( "font-size", "18px" ) ], title "Вход 1" ] [ text "spa" ]
+        i [ class "material-icons", style [ ( "color", color ), ( "font-size", "28px" ) ], title "Вход 1" ] [ text "spa" ]
 
 
 outputIcon : String -> Html Msg
@@ -411,7 +449,7 @@ outputIcon state =
                 _ ->
                     "black"
     in
-        i [ class "material-icons", style [ ( "color", color ), ( "font-size", "18px" ) ], title "Вход 1" ] [ text "spa" ]
+        i [ class "material-icons", style [ ( "color", color ), ( "font-size", "28px" ) ], title "Вход 1" ] [ text "spa" ]
 
 
 deviceHeader : DeviceInfo -> Html Msg
@@ -442,10 +480,10 @@ deviceBody d =
             ]
         , div [] [ text " Управление: " ]
         , div []
-            [ button [ class "control" ] [ conrtolIcon d.id "out1" ]
-            , button [ class "control" ] [ conrtolIcon d.id "out2" ]
-            , button [ class "control" ] [ conrtolIcon d.id "out3" ]
-            , button [ class "control" ] [ conrtolIcon d.id "out4" ]
+            [ conrtolIcon "1" (onTouchStart (Control d.id "out1")) ""
+            , conrtolIcon "2" (onTouchStart (Control d.id "out1")) " touch"
+            , conrtolIcon "3" (onClick (Control d.id "out1")) ""
+            , conrtolIcon "4" (onClick (Control d.id "out1")) " touch"
             ]
         , div [] [ text " Счетчик: " ]
         , div [] [ text d.counter ]

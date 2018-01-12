@@ -80,6 +80,20 @@ window.addEventListener("storage", function(event) {
     }
 }, false);
 
+App.ports.beep.subscribe(function(data) {
+    console.log("beep", data);
+    document.getElementsByTagName('audio')[0].play();
+});
+
+// document.body.addEventListener('touchstart', function() {
+// // document.body.addEventListener('click', function() {
+//   console.log("boo");
+//   document.getElementsByTagName('audio')[0].play();
+//   // if ("vibrate" in navigator) {
+//   //   navigator.vibrate(1000);
+//   // }
+// });
+
 // connect();
 
 // setInterval(function() {

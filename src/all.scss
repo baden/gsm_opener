@@ -1,5 +1,7 @@
 // @import "fonts/material-icons.css";
 
+html, body { touch-action: manipulation; }
+
 #elm-app {
     display: -webkit-inline-box;
 }
@@ -37,11 +39,14 @@
         text-align: left;
     }
 
-    button.control {
-        -webkit-appearance: none;
-        appearance: none;
+    .control {
+        // -webkit-appearance: none;
+        // appearance: none;
+        // touch-action: manipulation;
+        cursor: pointer;
         display: inline-grid;
-        border: none;
+        // border: none;
+        border: 1px solid white;
         padding: 0;
         margin: 2px;
         background-color: #cc0;
@@ -49,6 +54,13 @@
             padding: 10px;
             margin: 2px;
         }
+        &:hover {
+            border: 1px solid black;
+        }
+    }
+
+    .action {
+        background-color: green;
     }
 
 }
@@ -79,4 +91,18 @@ li.device {
 
 i.material-icons {
     vertical-align: middle;
+}
+
+.touch {
+    touch-action: manipulation;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }

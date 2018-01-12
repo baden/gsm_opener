@@ -43,3 +43,6 @@ port storeSession : Maybe String -> Cmd msg
 
 
 port onSessionChange : (Json.Encode.Value -> msg) -> Sub msg
+
+
+port beep : String -> Cmd msg

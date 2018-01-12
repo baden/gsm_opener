@@ -8,13 +8,16 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.0"
-   width="700.000000pt"
-   height="700.000000pt"
-   viewBox="0 0 700.000000 700.000000"
+   width="875"
+   height="875"
+   viewBox="0 0 700 700"
    preserveAspectRatio="xMidYMid meet"
    id="svg2"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="safari-pinned-tab.svg">
+   sodipodi:docname="safari-pinned-tab.svg"
+   inkscape:export-filename="/home/baden/SDK/baden.work/gsm/app/gsm_opener/src/logo-ios.png"
+   inkscape:export-xdpi="105.33"
+   inkscape:export-ydpi="105.33">
   <defs
      id="defs90" />
   <sodipodi:namedview
@@ -26,17 +29,30 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1588"
+     inkscape:window-width="2033"
      inkscape:window-height="976"
      id="namedview88"
-     showgrid="false"
-     inkscape:zoom="0.7628672"
-     inkscape:cx="363.62968"
-     inkscape:cy="358.98498"
-     inkscape:window-x="49"
-     inkscape:window-y="24"
+     showgrid="true"
+     inkscape:zoom="0.53942857"
+     inkscape:cx="422.93204"
+     inkscape:cy="441.24011"
+     inkscape:window-x="125"
+     inkscape:window-y="310"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg2" />
+     inkscape:current-layer="svg2"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     units="px">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4264" />
+    <sodipodi:guide
+       position="0,884.40945"
+       orientation="1,0"
+       id="guide4266"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+  </sodipodi:namedview>
   <metadata
      id="metadata4">
 Created by potrace 1.11, written by Peter Selinger 2001-2013
@@ -46,9 +62,17 @@ Created by potrace 1.11, written by Peter Selinger 2001-2013
     <dc:format>image/svg+xml</dc:format>
     <dc:type
        rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    <dc:title></dc:title>
   </cc:Work>
 </rdf:RDF>
 </metadata>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none"
+     id="rect4262"
+     width="700"
+     height="700"
+     x="0"
+     y="5.5067062e-14" />
   <g
      id="g4258"
      transform="matrix(1.1607967,0,0,1.1607967,-67.463515,-1.0374766)">
