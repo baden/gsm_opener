@@ -34,11 +34,11 @@
 
 </head>
 
-<body style="padding:0; margin:0;-webkit-flex:1">
+<body>
     <audio autoplay>
     	<source src="/beep.mp3">
     </audio>
-    <div id="App" style="text-align: center; padding-top:10px">
+    <div id="App">
         <div id="elm-app"></div>
     </div>
 
@@ -186,6 +186,38 @@
         });
       }
 
+
+      // document.addEventListener("touchstart", function (){
+      //     if (had_touch) return;
+      //     // play empty buffer to unmute audio
+      //     var buffer = context.createBuffer(1, 1, 22050);
+      //     var source = context.createBufferSource();
+      //     source.buffer = buffer;
+      //     source.connect(context.destination);
+      //     source.start(0);
+      //     had_touch = true;
+      // });
+
       </script>
+
+      <!-- Run the game code -->
+      <script type="text/javascript">
+      console.log("WTF1");
+        function ios_unlock_sound(event) {
+            const context = new AudioContext();
+            // g_WebAudioContext
+            var buffer = context.createBuffer(1, 1, 22050);
+            var source = context.createBufferSource();
+            source.buffer = buffer;
+            source.connect(context.destination);
+            console.log(["WTF2", source]);
+            // source.noteOn(0)
+            if(source.play){    source.play(0);}
+            if(source.noteOn){    source.noteOn(0);};
+            window.removeEventListener("touchend", ios_unlock_sound, false);
+        }
+        window.addEventListener("touchend", ios_unlock_sound, false);
+        </script>
+
 </body>
 </html>

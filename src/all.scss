@@ -1,20 +1,94 @@
 // @import "fonts/material-icons.css";
 
-html, body { touch-action: manipulation; }
+html, body {
+    touch-action: manipulation;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#App {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: lightgreen;
+    // text-align: center;
+    // padding-top:10px;
+}
 
 #elm-app {
     display: -webkit-inline-box;
 }
 
+.control_panel {
+    position: absolute;
+    display: flex;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    background-color: lightblue;
+    button {
+        -webkit-appearance: none;
+        border: none;
+        padding: 7px 10px;
+    }
+    input {
+        padding: 7px;
+        flex: 1;
+    }
+}
+
+.main_panel {
+    position: absolute;
+    overflow-x: hidden;
+    overflow-y: auto;
+    top:32px;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    background-color: lightgray;
+}
+
+ul.device_list {
+    // max-width: 200px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    // margin-left: 0px;
+    // margin-right: 50px;
+}
+
+li.device {
+    border: 1px solid blue;
+    padding: 2px;
+    margin: 2px;
+    // max-width: 200px;
+
+    // grid-template-columns: 100px auto 30px;
+    // vertical-align: middle;
+    //
+    // span:first-child {
+    //     text-align: left;
+    // }
+
+}
+
 .device-header {
     display: block;
     position: relative;
-    margin: 0 0 8px 0;
+    margin: 0 0 8px 20px;
     padding: 0 0 4px 0;
 
     i:first-child {
         position: absolute;
-        left: 0;
+        left: -20px;
     }
 
     i:last-child {
@@ -49,9 +123,9 @@ html, body { touch-action: manipulation; }
         border: 1px solid white;
         padding: 0;
         margin: 2px;
-        background-color: #cc0;
+        background-color: #0c0;
         span {
-            padding: 10px;
+            padding: 20px;
             margin: 2px;
         }
         &:hover {
@@ -65,28 +139,6 @@ html, body { touch-action: manipulation; }
 
 }
 
-
-ul.device_list {
-    // max-width: 200px;
-    list-style-type: none;
-    margin-left: 0px;
-    margin-right: 50px;
-}
-
-li.device {
-    border: 1px solid blue;
-    padding: 2px;
-    margin: 2px;
-    // max-width: 200px;
-
-    // grid-template-columns: 100px auto 30px;
-    // vertical-align: middle;
-    //
-    // span:first-child {
-    //     text-align: left;
-    // }
-
-}
 
 
 i.material-icons {

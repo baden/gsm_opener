@@ -95,7 +95,6 @@ type Msg
     | WebsocketClose String
     | WebsocketMessage JE.Value
     | WebsocketError String
-    | SaveSession
     | SetUser (Maybe Session.User)
     | Control Id String
 
@@ -175,14 +174,24 @@ update msg model =
                 newLinks =
                     model.links ++ [ model.input ]
             in
-                ( { model | input = "", links = newLinks }, wsSendLinks newLinks )
+                ( { model | input = "", links = newLinks }
+                , Cmd.batch
+                    [ wsSendLinks newLinks
+                    , Session.storeSession { token = "notoken", links = newLinks }
+                    ]
+                )
 
         Unlink id ->
             let
                 newLinks =
                     List.filter ((/=) id) model.links
             in
-                ( { model | links = newLinks }, wsSendLinks newLinks )
+                ( { model | links = newLinks }
+                , Cmd.batch
+                    [ wsSendLinks newLinks
+                    , Session.storeSession { token = "notoken", links = newLinks }
+                    ]
+                )
 
         WebsocketOpen str ->
             let
@@ -215,9 +224,6 @@ update msg model =
                     Debug.log "WebsocketError" str
             in
                 ( model, Cmd.none )
-
-        SaveSession ->
-            ( model, Session.storeSession { token = "notoken", links = model.links } )
 
         SetUser u ->
             let
@@ -308,33 +314,23 @@ view model =
                     List.member id model.links
     in
         div []
-            [ div []
+            [ div [ class "control_panel" ]
                 [ view_connectStatus model.connectStatus
-                , button [ onClick SaveSession ] [ text <| "Save" ]
-                  -- , div []
-                  --     [ text <| toString <| Dict.toList model.devices
-                  --     ]
+                , input [ onInput Input, value model.input ] []
+                , button [ onClick Send, disabled disabledLink ] [ text "Подключиться" ]
+                , div [] (List.map viewMessage (List.reverse model.messages))
                 ]
-            , div [ style styles ]
-                [ div
-                    []
-                    [ input [ onInput Input, value model.input ] []
-                    , button [ onClick Send, disabled disabledLink ] [ text <| "Link to " ++ model.input ]
-                    , div [] (List.map viewMessage (List.reverse model.messages))
-                    ]
-                , div []
-                    [ p [] [ text "Links:" ]
-                    , ul [ class "device_list" ] <|
-                        (model.links
-                            |> List.map
-                                (\id ->
-                                    model.devices
-                                        |> Dict.get id
-                                        |> Maybe.withDefault (Receive.deviceDefault id)
-                                        |> viewDevice
-                                )
-                        )
-                    ]
+            , div [ class "main_panel", style styles ]
+                [ ul [ class "device_list" ] <|
+                    (model.links
+                        |> List.map
+                            (\id ->
+                                model.devices
+                                    |> Dict.get id
+                                    |> Maybe.withDefault (Receive.deviceDefault id)
+                                    |> viewDevice
+                            )
+                    )
                 ]
             ]
 
@@ -471,14 +467,14 @@ deviceBody d =
             , inputIcon d.in3
             , inputIcon d.in4
             ]
-        , div [] [ text " Выходы: " ]
+        , div [] [ text "Выходы: " ]
         , div []
             [ outputIcon d.out1
             , outputIcon d.out2
             , outputIcon d.out3
             , outputIcon d.out4
             ]
-        , div [] [ text " Управление: " ]
+        , div [] [ text "Управление: " ]
         , div []
             [ conrtolIcon "1" (onTouchStart (Control d.id "out1")) ""
             , conrtolIcon "2" (onTouchStart (Control d.id "out1")) " touch"
@@ -514,7 +510,7 @@ view_connectStatus cs =
                 CS_Connected ->
                     "#00d200"
     in
-        div [ title "Состояние подключения к серверу" ]
+        div [ title "Состояние подключения к серверу", style [ ( "display", "inline-block" ) ] ]
             [ i [ class "material-icons", style [ ( "font-size", "32px" ), ( "color", color ) ] ] [ text "wifi" ]
             ]
 
