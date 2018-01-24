@@ -1,4 +1,4 @@
-const Elm = require('./App/App.elm');
+const Elm = require('./App/Main.elm');
 
 // console.log("Elm=", Elm, Elm.ports);
 
