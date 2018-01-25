@@ -23,6 +23,7 @@ import Pages.AddDevice as AddDevice
 import Pages.HomeScreen as HomeScreen
 import Pages.DeviceList as DeviceList
 import Pages.DeviceSettings as DeviceSettings
+import Widgets.Popups as Popups
 
 
 type ConnectStatus
@@ -51,6 +52,7 @@ type alias Model =
     , connectStatus : ConnectStatus
     , devices : Dict.Dict String DeviceInfo
     , pageModel : PageModel
+    , popups : Popups.Popups
     }
 
 
@@ -100,6 +102,11 @@ init flags =
           , connectStatus = CS_Disconnected
           , devices = Dict.empty
           , pageModel = page
+          , popups =
+                []
+                -- [ Popups.Popup Popups.PopupLeft
+                -- , Popups.Popup Popups.PopupLeft
+                -- ]
           }
         , Cmd.batch [ delay (Time.second * 1) Connect ]
         )

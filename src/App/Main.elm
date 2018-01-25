@@ -23,6 +23,7 @@ import Pages.AddDevice as AddDevice
 import Pages.HomeScreen as HomeScreen
 import Pages.DeviceList as DeviceList
 import Pages.DeviceSettings as DeviceSettings
+import Widgets.Popups as Popups
 
 
 main : Program JE.Value Model Msg
@@ -46,30 +47,33 @@ view model =
                 _ ->
                     [ ( "pointer-events", "none" ), ( "opacity", "0.3" ) ]
     in
-        case model.pageModel of
-            AddDeviceModel m ->
-                AddDevice.view m
+        div [ class "root" ]
+            [ case model.pageModel of
+                AddDeviceModel m ->
+                    AddDevice.view m
 
-            HomeScreenModel m ->
-                let
-                    id =
-                        "123"
+                HomeScreenModel m ->
+                    let
+                        id =
+                            "123"
 
-                    device =
-                        model.devices
-                            |> Dict.get id
-                            |> Maybe.withDefault (Receive.deviceDefault id)
-                in
-                    HomeScreen.view
-                        { device = device }
-                        m
-                        |> Html.map HomeScreenMsg
+                        device =
+                            model.devices
+                                |> Dict.get id
+                                |> Maybe.withDefault (Receive.deviceDefault id)
+                    in
+                        HomeScreen.view
+                            { device = device }
+                            m
+                            |> Html.map HomeScreenMsg
 
-            DeviceListModel m ->
-                DeviceList.view m
+                DeviceListModel m ->
+                    DeviceList.view m
 
-            DeviceSettingsModel m ->
-                DeviceSettings.view m
+                DeviceSettingsModel m ->
+                    DeviceSettings.view m
+            , Popups.view model.popups
+            ]
 
 
 

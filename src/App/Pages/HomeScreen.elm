@@ -24,7 +24,8 @@ type alias Config =
 
 init : Model
 init =
-    { inform = "Немає зв'язку з замком" }
+    { inform = "Немає зв'язку з замком"
+    }
 
 
 update : Msg -> Model -> Model
