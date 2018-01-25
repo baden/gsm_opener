@@ -53,13 +53,23 @@ view model =
         div [ class "root" ]
             [ case model.pageModel of
                 AddDeviceModel ->
-                    AddDevice.view
-                        { onImei = OnIMEI
-                        , onLabel = OnLabel
-                        , onAdd = Send
-                        , imei = model.imei
-                        , label = model.label
-                        }
+                    let
+                        disabledLink =
+                            case model.imei of
+                                "" ->
+                                    True
+
+                                id ->
+                                    List.any (\d -> d.id == id) model.links
+                    in
+                        AddDevice.view
+                            { onImei = OnIMEI
+                            , onLabel = OnLabel
+                            , onAdd = Send
+                            , imei = model.imei
+                            , label = model.label
+                            , disabled = disabledLink
+                            }
 
                 HomeScreenModel m ->
                     let
@@ -95,7 +105,7 @@ view model =
                                                 |> (\e -> ( title, e ))
                                     )
                     in
-                        DeviceList.view devices
+                        DeviceList.view devices { onClickAdd = OnClickAdd }
 
                 DeviceSettingsModel m ->
                     DeviceSettings.view m

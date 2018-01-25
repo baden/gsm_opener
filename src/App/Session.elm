@@ -30,16 +30,16 @@ type alias User =
 
 
 type alias Item =
-    { title : String
-    , id : String
+    { id : String
+    , title : String
     }
 
 
 itemDecoder : Decoder Item
 itemDecoder =
     decode Item
-        |> Pipeline.required "title" Decode.string
         |> Pipeline.required "id" Decode.string
+        |> Pipeline.required "title" Decode.string
 
 
 userDecoder : Decoder User

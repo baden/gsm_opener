@@ -11,6 +11,7 @@ type alias Config msg =
     , onAdd : msg
     , imei : String
     , label : String
+    , disabled : Bool
     }
 
 
@@ -21,7 +22,7 @@ view config =
         , div [ class "input" ] [ input [ onInput config.onImei, value config.imei ] [] ]
         , div [ class "label" ] [ text "Найменування" ]
         , div [ class "input" ] [ input [ onInput config.onLabel, value config.label ] [] ]
-        , div [ class "button", onClick config.onAdd ] [ mi "add_circle_outline", text "Додати" ]
+        , button [ class "button", onClick config.onAdd, disabled config.disabled ] [ mi "add_circle_outline", text "Додати" ]
         ]
 
 

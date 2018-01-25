@@ -19,7 +19,10 @@ import Server
 import Task
 import Time exposing (Time)
 import Process
-import Pages.AddDevice as AddDevice
+
+
+-- import Pages.AddDevice as AddDevice
+
 import Pages.HomeScreen as HomeScreen
 import Pages.DeviceList as DeviceList
 import Pages.DeviceSettings as DeviceSettings
@@ -64,6 +67,7 @@ type alias Id =
 type Msg
     = OnIMEI String
     | OnLabel String
+    | OnClickAdd
     | Connect
     | Send
     | Unlink String
@@ -124,6 +128,9 @@ update msg model =
         OnLabel v ->
             ( { model | label = v }, Cmd.none )
 
+        OnClickAdd ->
+            ( { model | pageModel = AddDeviceModel }, Cmd.none )
+
         Connect ->
             ( model
             , Cmd.batch
@@ -138,6 +145,7 @@ update msg model =
             in
                 ( { model
                     | imei = ""
+                    , label = ""
                     , links = newLinks
                     , pageModel = HomeScreenModel HomeScreen.init
                   }
