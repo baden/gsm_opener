@@ -1,4 +1,4 @@
-module Pages.DeviceList exposing (view, Model)
+module Pages.DeviceSettings exposing (view, Model)
 
 import Html exposing (..)
 
@@ -11,5 +11,5 @@ type alias Model =
 view : Model -> Html msg
 view m =
     div []
-        [ text "TBD: DeviceList"
+        [ text "TBD: DeviceSettings"
         ]

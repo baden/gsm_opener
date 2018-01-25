@@ -1,6 +1,7 @@
 module Update
     exposing
         ( Model
+        , PageModel(..)
         , Msg(..)
         , ConnectStatus(..)
         , init
@@ -17,6 +18,10 @@ import Server
 import Task
 import Time exposing (Time)
 import Process
+import Pages.AddDevice as AddDevice
+import Pages.HomeScreen as HomeScreen
+import Pages.DeviceList as DeviceList
+import Pages.DeviceSettings as DeviceSettings
 
 
 type ConnectStatus
@@ -24,11 +29,27 @@ type ConnectStatus
     | CS_Connected
 
 
+
+-- type Page
+--     = AddDevicePage
+--     | HomeScreenPage
+--     | DeviceListPage
+--     | DeviceSettingsPage
+
+
+type PageModel
+    = AddDeviceModel AddDevice.Model
+    | HomeScreenModel HomeScreen.Model
+    | DeviceListModel DeviceList.Model
+    | DeviceSettingsModel DeviceSettings.Model
+
+
 type alias Model =
     { input : String
     , links : List String
     , connectStatus : ConnectStatus
     , devices : Dict.Dict String DeviceInfo
+    , pageModel : PageModel
     }
 
 
@@ -58,18 +79,19 @@ init flags =
         _ =
             Debug.log "init" session
 
-        links =
+        ( links, page ) =
             case session of
                 Nothing ->
-                    []
+                    ( [], AddDeviceModel AddDevice.init )
 
                 Just s ->
-                    s.links
+                    ( s.links, HomeScreenModel HomeScreen.init )
     in
         ( { input = ""
           , links = links
           , connectStatus = CS_Disconnected
           , devices = Dict.empty
+          , pageModel = page
           }
         , Cmd.batch [ delay (Time.second * 1) Connect ]
         )

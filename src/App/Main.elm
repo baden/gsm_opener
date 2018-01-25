@@ -1,9 +1,8 @@
 module Main exposing (..)
 
-import Update exposing (Model, Msg(..), ConnectStatus(..), init, update)
+import Update exposing (Model, PageModel(..), Msg(..), ConnectStatus(..), init, update)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import WS
 import Json.Encode as JE
 import Session
@@ -11,6 +10,10 @@ import Dict
 import Receive exposing (DeviceInfo)
 import ControlPanel
 import Device
+import Pages.AddDevice as AddDevice
+import Pages.HomeScreen as HomeScreen
+import Pages.DeviceList as DeviceList
+import Pages.DeviceSettings as DeviceSettings
 
 
 main : Program JE.Value Model Msg
@@ -21,19 +24,6 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
-
-
-
--- echoServer : String
--- echoServer =
---     "ws://localhost:9112/websocket"
--- type alias ReceiveUpdate =
---     { name : String
---     , id : String
---     , values : DeviceInfo
---     }
--- Возможно в перспективе сюда нужно будет добавить массив для Cmd.batch
--- View
 
 
 view : Model -> Html Msg
@@ -47,21 +37,36 @@ view model =
                 _ ->
                     [ ( "pointer-events", "none" ), ( "opacity", "0.3" ) ]
     in
-        div []
-            [ ControlPanel.view model
-            , div [ class "main_panel", style styles ]
-                [ ul [ class "device_list" ] <|
-                    (model.links
-                        |> List.map
-                            (\id ->
-                                model.devices
-                                    |> Dict.get id
-                                    |> Maybe.withDefault (Receive.deviceDefault id)
-                                    |> Device.viewDevice
-                            )
-                    )
-                ]
-            ]
+        case model.pageModel of
+            AddDeviceModel m ->
+                AddDevice.view m
+
+            HomeScreenModel m ->
+                HomeScreen.view m
+
+            DeviceListModel m ->
+                DeviceList.view m
+
+            DeviceSettingsModel m ->
+                DeviceSettings.view m
+
+
+
+-- div []
+--     [ ControlPanel.view model
+--     , div [ class "main_panel", style styles ]
+--         [ ul [ class "device_list" ] <|
+--             (model.links
+--                 |> List.map
+--                     (\id ->
+--                         model.devices
+--                             |> Dict.get id
+--                             |> Maybe.withDefault (Receive.deviceDefault id)
+--                             |> Device.viewDevice
+--                     )
+--             )
+--         ]
+--     ]
 
 
 viewMessage : String -> Html msg

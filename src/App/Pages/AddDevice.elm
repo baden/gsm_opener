@@ -1,10 +1,20 @@
-module Pages.AddDevice exposing (view)
+module Pages.AddDevice exposing (init, view, Model)
 
 import Html exposing (..)
 
 
-view : Html msg
-view =
+type alias Model =
+    { a : String
+    }
+
+
+init : Model
+init =
+    { a = "init" }
+
+
+view : Model -> Html msg
+view m =
     div []
         [ text "TBD: AddDevice"
         ]

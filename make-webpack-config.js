@@ -167,7 +167,7 @@ module.exports = function({ isProd }) {
           exclude: [/elm-stuff/, /node_modules/],
           use:
             HMR?
-              ['elm-hot-loader', {loader: 'elm-webpack-loader', options: {debug: true, warn: true, verbose: true}}]
+              ['elm-hot-loader', {loader: 'elm-webpack-loader', options: {debug: false, warn: true, verbose: true}}]
             :
               ['elm-webpack-loader']
         }
