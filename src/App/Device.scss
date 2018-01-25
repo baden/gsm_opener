@@ -1,0 +1,150 @@
+li.device {
+    // border: 1px solid black;
+    box-shadow: 0px 0px 4px gray;
+    padding: 2px;
+    margin: 2px;
+    // max-width: 200px;
+
+    // grid-template-columns: 100px auto 30px;
+    // vertical-align: middle;
+    //
+    // span:first-child {
+    //     text-align: left;
+    // }
+}
+
+@media (min-width: 900px) {
+    li.device {
+        box-shadow: 0px 0px 10px gray;
+        margin: 10px 4px 10px 4px;
+    }
+}
+
+.device-header {
+    display: grid;
+    grid-template-columns: 24px auto 24px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    // margin: 0 0 10px 0px;
+    // padding: 0 0 2px 0;
+    padding: 2px;
+    font-size: 20px;
+
+    i:first-child {
+        // position: absolute;
+        // left: -20px;
+        font-size: 24px;
+    }
+
+    i:last-child {
+        // position: absolute;
+        // right: 0;
+        font-size: 24px;
+        color: red;
+        cursor: pointer;
+        &:hover {
+            background-color: red;
+            color: black;
+        }
+    }
+
+    border: 0px;
+    border-bottom: 1px solid gray;
+    // box-shadow: 0px 1px 10px black;
+
+}
+
+.device-body {
+    display: grid;
+    grid-template-columns: auto;
+    text-align: center;
+    padding: 10px;
+
+    transition: filter 0.5s ease-in-out;
+
+    // Чит-код, чтобы в хроме не прыгала анимация блюра
+    transition-timing-function: steps(10, end);
+
+    // background-color: gray;
+
+    &.not_connected {
+        pointer-events: none;
+        -webkit-filter: blur(20px);
+                filter: blur(20px);
+        // background-color: blue;
+    }
+
+    i.input {
+        font-size: 41px;
+        // font-weight: bold;
+
+        .shake {
+        }
+
+        &.active {
+            color: green;
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        &.passive {
+            color: red;
+        }
+
+    }
+    i.output {
+        font-size: 45px;
+        // font-weight: bold;
+
+        .shake {
+        }
+
+        &.active {
+            color: green;
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        &.passive {
+            color: red;
+        }
+
+    }
+
+
+    @keyframes shake {
+      10%, 90% {
+        transform: translate3d(-1px, 1px, 0);
+      }
+
+      20%, 80% {
+        transform: translate3d(2px, -1px, 0);
+      }
+
+      30%, 50%, 70% {
+        transform: translate3d(-4px, 2px, 0);
+      }
+
+      40%, 60% {
+        transform: translate3d(4px, -2px, 0);
+      }
+    }
+
+    // div:nth-child(odd) {
+    //     text-align: right;
+    // }
+    // div:nth-child(even) {
+    //     text-align: left;
+    // }
+
+
+    .action {
+        background-color: green;
+    }
+
+}

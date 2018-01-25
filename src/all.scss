@@ -1,4 +1,6 @@
 // @import "fonts/material-icons.css";
+@import "./App/Widgets/SimpleCommand.scss";
+@import "./App/Device.scss";
 
 html, body {
     touch-action: manipulation;
@@ -71,94 +73,6 @@ ul.device_list {
     padding: 0;
     // margin-left: 0px;
     // margin-right: 50px;
-}
-
-li.device {
-    border: 1px solid blue;
-    padding: 2px;
-    margin: 2px;
-    // max-width: 200px;
-
-    // grid-template-columns: 100px auto 30px;
-    // vertical-align: middle;
-    //
-    // span:first-child {
-    //     text-align: left;
-    // }
-}
-
-.device-header {
-    display: block;
-    position: relative;
-    margin: 0 0 8px 20px;
-    padding: 0 0 4px 0;
-
-    i:first-child {
-        position: absolute;
-        left: -20px;
-    }
-
-    i:last-child {
-        position: absolute;
-        right: 0;
-    }
-
-    border: 0px;
-    border-bottom: 1px solid gray;
-    // box-shadow: 0px 1px 10px black;
-
-}
-
-.device-body {
-    display: grid;
-    grid-template-columns: auto;
-    text-align: center;
-
-    transition: filter 0.5s ease-in-out;
-
-    // Чит-код, чтобы в хроме не прыгала анимация блюра
-    transition-timing-function: steps(10, end);
-
-    &.not_connected {
-        pointer-events: none;
-        -webkit-filter: blur(20px);
-                filter: blur(20px);
-        // background-color: blue;
-    }
-
-    // div:nth-child(odd) {
-    //     text-align: right;
-    // }
-    // div:nth-child(even) {
-    //     text-align: left;
-    // }
-
-    .control {
-        // -webkit-appearance: none;
-        // appearance: none;
-        // touch-action: manipulation;
-        cursor: pointer;
-        display: inline-grid;
-        // border: none;
-        border: 2px solid black;
-        border-radius: 6px;
-        padding: 0;
-        margin: 2px;
-        background-color: #0c7;
-        span {
-            padding: 30px;
-            margin: 2px;
-        }
-        &:hover {
-            // border: 2px solid #ccf;
-            // box-shadow: 0px 0px 12px rgba(32,32,32,0.5);
-        }
-    }
-
-    .action {
-        background-color: green;
-    }
-
 }
 
 

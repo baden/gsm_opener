@@ -74,8 +74,7 @@ connectionIcon connected =
     i
         [ class "material-icons"
         , style
-            [ ( "font-size", "18px" )
-            , ( "color"
+            [ ( "color"
               , if connected then
                     "green"
                 else
@@ -88,23 +87,7 @@ connectionIcon connected =
 
 closeIcon : String -> Html Msg
 closeIcon id =
-    i [ class "material-icons", style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ], title "Удалить", onClick <| Unlink id ] [ text "close" ]
-
-
-conrtolIcon : String -> Attribute msg -> String -> Html msg
-conrtolIcon label msg pclass =
-    -- div [ class "control", onClick (Control id cmd) ]
-    div [ class <| "control noselect" ++ pclass, msg ]
-        [ span []
-            [ i
-                [ class "material-icons"
-                , style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ]
-                , title "Активировать/Деактивировать"
-                ]
-                [ text "face" ]
-            , text label
-            ]
-        ]
+    i [ class "material-icons", title "Удалить", onClick <| Unlink id ] [ text "close" ]
 
 
 onTouchStart : msg -> Attribute msg
@@ -115,41 +98,49 @@ onTouchStart msg =
 inputIcon : String -> Html Msg
 inputIcon state =
     let
-        color =
+        pclass =
             case state of
                 "-1" ->
-                    "#990"
+                    ""
 
                 "0" ->
-                    "red"
+                    " passive"
 
                 "1" ->
-                    "green"
+                    " active"
 
                 _ ->
-                    "black"
+                    ""
     in
-        i [ class "material-icons", style [ ( "color", color ), ( "font-size", "28px" ) ], title "Вход 1" ] [ text "spa" ]
+        i
+            [ class <| "input material-icons" ++ pclass
+            , title "Вход"
+            ]
+            [ text "input" ]
 
 
 outputIcon : String -> Html Msg
 outputIcon state =
     let
-        color =
+        pclass =
             case state of
                 "-1" ->
-                    "#990"
+                    ""
 
                 "0" ->
-                    "red"
+                    " passive"
 
                 "1" ->
-                    "green"
+                    " active"
 
                 _ ->
-                    "black"
+                    ""
     in
-        i [ class "material-icons", style [ ( "color", color ), ( "font-size", "28px" ) ], title "Вход 1" ] [ text "spa" ]
+        i
+            [ class <| "output material-icons" ++ pclass
+            , title "Выход"
+            ]
+            [ text "lightbulb_outline" ]
 
 
 

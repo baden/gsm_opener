@@ -13,14 +13,14 @@ type alias Config msg =
 
 view : Config msg -> Html msg
 view config =
-    div [ class <| "control noselect", onClick config.onClick ]
+    div [ class <| "simple_command noselect", onClick config.onClick ]
         [ span []
             [ i
                 [ class "material-icons"
-                , style [ ( "color", "red" ), ( "font-size", "18px" ), ( "cursor", "pointer" ) ]
                 , title "Активировать/Деактивировать"
                 ]
-                [ text "face" ]
+                [ text "lock_open" ]
+            , Html.br [] []
             , text config.label
             ]
         ]
