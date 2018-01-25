@@ -226,7 +226,7 @@ update msg model =
                         ( { model | pageModel = HomeScreenModel nm }, Cmd.none )
 
                     Just (HomeScreen.OnSettings) ->
-                        ( { model | pageModel = HomeScreenModel nm }, Cmd.none )
+                        ( { model | pageModel = DeviceListModel DeviceList.init }, Cmd.none )
 
                     Just (HomeScreen.OnAction) ->
                         ( { model | pageModel = HomeScreenModel nm }

@@ -1,6 +1,7 @@
 // @import "fonts/material-icons.css";
 // @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 @import "./App/Pages/HomeScreen.scss";
+@import "./App/Pages/DeviceList.scss";
 @import "./App/Widgets/SimpleCommand.scss";
 @import "./App/Widgets/Popups.scss";
 @import "./App/Device.scss";
@@ -19,6 +20,8 @@ html, body {
     font-size: 20px;
     // font-family: 'Comfortaa', cursive !important;
     font-family: 'Comfortaa' !important;;
+
+    -webkit-text-size-adjust: 100%;
 }
 
 #App {
@@ -87,14 +90,6 @@ html, body {
     // background-color: lightgray;
 }
 
-ul.device_list {
-    // max-width: 200px;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    // margin-left: 0px;
-    // margin-right: 50px;
-}
 
 
 

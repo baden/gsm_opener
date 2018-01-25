@@ -1,0 +1,44 @@
+ul.device_list {
+    // max-width: 200px;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;;
+    // margin-left: 0px;
+    // margin-right: 50px;
+
+
+    li.device_item {
+        padding-top: 10px;
+        display: grid;
+        grid-template-columns: 70px auto 32px;
+        // grid-template-rows: 1fr 2fr 1fr;
+
+        i:first-child {
+            font-size: 64px;
+            color: #0cb;
+            // margin-right: 10px;
+        }
+
+        i:last-child {
+            font-size: 32px;
+            color: red;
+        }
+
+        &:not(:last-child) {
+            border-bottom: 1px dashed #222;
+        }
+
+        .label {
+            font-size: 32px;
+        }
+
+    }
+
+}
+
+.bottom_panel {
+    text-align: center;
+    i {
+        font-size: 64px;
+    }
+}

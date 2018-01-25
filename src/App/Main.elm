@@ -68,7 +68,17 @@ view model =
                             |> Html.map HomeScreenMsg
 
                 DeviceListModel m ->
-                    DeviceList.view m
+                    let
+                        devices =
+                            model.links
+                                |> List.map
+                                    (\id ->
+                                        model.devices
+                                            |> Dict.get id
+                                            |> Maybe.withDefault (Receive.deviceDefault id)
+                                    )
+                    in
+                        DeviceList.view devices
 
                 DeviceSettingsModel m ->
                     DeviceSettings.view m
