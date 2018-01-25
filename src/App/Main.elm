@@ -17,8 +17,11 @@ import Json.Encode as JE
 import Session
 import Dict
 import Receive exposing (DeviceInfo)
-import ControlPanel
-import Device
+
+
+-- import ControlPanel
+-- import Device
+
 import Pages.AddDevice as AddDevice
 import Pages.HomeScreen as HomeScreen
 import Pages.DeviceList as DeviceList
@@ -49,8 +52,14 @@ view model =
     in
         div [ class "root" ]
             [ case model.pageModel of
-                AddDeviceModel m ->
-                    AddDevice.view m
+                AddDeviceModel ->
+                    AddDevice.view
+                        { onImei = OnIMEI
+                        , onLabel = OnLabel
+                        , onAdd = Send
+                        , imei = model.imei
+                        , label = model.label
+                        }
 
                 HomeScreenModel m ->
                     let
@@ -72,10 +81,18 @@ view model =
                         devices =
                             model.links
                                 |> List.map
-                                    (\id ->
-                                        model.devices
-                                            |> Dict.get id
-                                            |> Maybe.withDefault (Receive.deviceDefault id)
+                                    (\l ->
+                                        let
+                                            id =
+                                                l.id
+
+                                            title =
+                                                l.title
+                                        in
+                                            model.devices
+                                                |> Dict.get id
+                                                |> Maybe.withDefault (Receive.deviceDefault id)
+                                                |> (\e -> ( title, e ))
                                     )
                     in
                         DeviceList.view devices

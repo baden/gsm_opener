@@ -16,7 +16,7 @@ init =
     }
 
 
-view : List DeviceInfo -> Html msg
+view : List ( String, DeviceInfo ) -> Html msg
 view m =
     div [ class "device_list" ]
         [ m
@@ -28,13 +28,13 @@ view m =
         ]
 
 
-viewDeviceItem : DeviceInfo -> Html msg
-viewDeviceItem d =
+viewDeviceItem : ( String, DeviceInfo ) -> Html msg
+viewDeviceItem ( title, d ) =
     li [ class "device_item" ]
         [ mi "settings"
         , div []
-            [ div [ class "label" ] [ text <| "Хата" ]
-            , div [ class "id" ] [ text <| "123" ]
+            [ div [ class "label" ] [ text <| title ]
+            , div [ class "id" ] [ text <| d.id ]
             ]
         , mi "link"
         ]

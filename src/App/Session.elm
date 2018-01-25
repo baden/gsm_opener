@@ -1,4 +1,12 @@
-module Session exposing (User, sessionChange, resetSession, storeSession, decodeUserFromJson)
+module Session
+    exposing
+        ( User
+        , Item
+        , sessionChange
+        , resetSession
+        , storeSession
+        , decodeUserFromJson
+        )
 
 import Json.Encode as JE
 import Json.Decode as Decode exposing (Decoder)
@@ -9,23 +17,36 @@ import WS
 
 type alias User =
     { token : String
-    , links : List String
-
-    -- { email : String
-    -- , token : AuthToken
-    -- , username : Username
-    -- , bio : Maybe String
-    -- , image : UserPhoto
-    -- , createdAt : String
-    -- , updatedAt : String
+    , links :
+        List Item
+        -- { email : String
+        -- , token : AuthToken
+        -- , username : Username
+        -- , bio : Maybe String
+        -- , image : UserPhoto
+        -- , createdAt : String
+        -- , updatedAt : String
     }
+
+
+type alias Item =
+    { title : String
+    , id : String
+    }
+
+
+itemDecoder : Decoder Item
+itemDecoder =
+    decode Item
+        |> Pipeline.required "title" Decode.string
+        |> Pipeline.required "id" Decode.string
 
 
 userDecoder : Decoder User
 userDecoder =
     decode User
         |> Pipeline.required "token" Decode.string
-        |> Pipeline.required "links" (Decode.list Decode.string)
+        |> Pipeline.required "links" (Decode.list itemDecoder)
 
 
 
@@ -42,19 +63,27 @@ userDecoder =
 --
 
 
+itemEncode : Item -> JE.Value
+itemEncode item =
+    JE.object
+        [ "title" => JE.string item.title
+        , "id" => JE.string item.id
+        ]
+
+
 userEncode : User -> JE.Value
 userEncode user =
     JE.object
         [ "token" => JE.string user.token
-        , "links" => JE.list (List.map JE.string user.links)
-
-        -- [ "email" => Encode.string user.email
-        -- , "token" => AuthToken.encode user.token
-        -- , "username" => encodeUsername user.username
-        -- , "bio" => EncodeExtra.maybe Encode.string user.bio
-        -- , "image" => UserPhoto.encode user.image
-        -- , "createdAt" => Encode.string user.createdAt
-        -- , "updatedAt" => Encode.string user.updatedAt
+        , "links"
+            => JE.list (List.map itemEncode user.links)
+          -- [ "email" => Encode.string user.email
+          -- , "token" => AuthToken.encode user.token
+          -- , "username" => encodeUsername user.username
+          -- , "bio" => EncodeExtra.maybe Encode.string user.bio
+          -- , "image" => UserPhoto.encode user.image
+          -- , "createdAt" => Encode.string user.createdAt
+          -- , "updatedAt" => Encode.string user.updatedAt
         ]
 
 

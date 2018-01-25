@@ -2,9 +2,10 @@ module Server exposing (wsSendLinks, wsSendCmd)
 
 import WS
 import Json.Encode as JE
+import Session
 
 
-wsSendLinks : List String -> Cmd msg
+wsSendLinks : List Session.Item -> Cmd msg
 wsSendLinks ls =
     let
         payload =
@@ -12,7 +13,7 @@ wsSendLinks ls =
                 [ ( "cmd", JE.string "link" )
                 , ( "params"
                   , JE.list <|
-                        (ls |> List.map (\l -> JE.string l))
+                        (ls |> List.map (\l -> JE.string l.id))
                   )
                 ]
     in

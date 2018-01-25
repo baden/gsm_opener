@@ -40,15 +40,16 @@ type ConnectStatus
 
 
 type PageModel
-    = AddDeviceModel AddDevice.Model
+    = AddDeviceModel
     | HomeScreenModel HomeScreen.Model
     | DeviceListModel DeviceList.Model
     | DeviceSettingsModel DeviceSettings.Model
 
 
 type alias Model =
-    { input : String
-    , links : List String
+    { imei : String
+    , label : String
+    , links : List Session.Item
     , connectStatus : ConnectStatus
     , devices : Dict.Dict String DeviceInfo
     , pageModel : PageModel
@@ -61,7 +62,8 @@ type alias Id =
 
 
 type Msg
-    = Input String
+    = OnIMEI String
+    | OnLabel String
     | Connect
     | Send
     | Unlink String
@@ -92,12 +94,13 @@ init flags =
         ( links, page ) =
             case session of
                 Nothing ->
-                    ( [], AddDeviceModel AddDevice.init )
+                    ( [], AddDeviceModel )
 
                 Just s ->
                     ( s.links, HomeScreenModel HomeScreen.init )
     in
-        ( { input = ""
+        ( { imei = ""
+          , label = ""
           , links = links
           , connectStatus = CS_Disconnected
           , devices = Dict.empty
@@ -115,8 +118,11 @@ init flags =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Input newInput ->
-            ( { model | input = newInput }, Cmd.none )
+        OnIMEI v ->
+            ( { model | imei = v }, Cmd.none )
+
+        OnLabel v ->
+            ( { model | label = v }, Cmd.none )
 
         Connect ->
             ( model
@@ -128,9 +134,13 @@ update msg model =
         Send ->
             let
                 newLinks =
-                    model.links ++ [ model.input ]
+                    model.links ++ [ Session.Item model.imei model.label ]
             in
-                ( { model | input = "", links = newLinks }
+                ( { model
+                    | imei = ""
+                    , links = newLinks
+                    , pageModel = HomeScreenModel HomeScreen.init
+                  }
                 , Cmd.batch
                     [ Server.wsSendLinks newLinks
                     , Session.storeSession { token = "notoken", links = newLinks }
@@ -140,7 +150,7 @@ update msg model =
         Unlink id ->
             let
                 newLinks =
-                    List.filter ((/=) id) model.links
+                    List.filter (\i -> i.id /= id) model.links
             in
                 ( { model | links = newLinks }
                 , Cmd.batch
