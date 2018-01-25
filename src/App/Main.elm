@@ -1,6 +1,15 @@
 module Main exposing (..)
 
-import Update exposing (Model, PageModel(..), Msg(..), ConnectStatus(..), init, update)
+import Update
+    exposing
+        ( Model
+        , PageModel(..)
+        , Msg(..)
+          -- , PageMessage(..)
+        , ConnectStatus(..)
+        , init
+        , update
+        )
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import WS
@@ -42,7 +51,19 @@ view model =
                 AddDevice.view m
 
             HomeScreenModel m ->
-                HomeScreen.view m
+                let
+                    id =
+                        "123"
+
+                    device =
+                        model.devices
+                            |> Dict.get id
+                            |> Maybe.withDefault (Receive.deviceDefault id)
+                in
+                    HomeScreen.view
+                        { device = device }
+                        m
+                        |> Html.map HomeScreenMsg
 
             DeviceListModel m ->
                 DeviceList.view m

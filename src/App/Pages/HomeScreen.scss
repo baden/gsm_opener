@@ -79,7 +79,14 @@
             overflow: hidden;
             i {
                 font-size: 48px;
+            }
+
+            &.active i {
                 color: lightgreen;
+            }
+
+            &.passive i {
+                color: red;
             }
 
         }

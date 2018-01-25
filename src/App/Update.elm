@@ -3,6 +3,7 @@ module Update
         ( Model
         , PageModel(..)
         , Msg(..)
+          -- , PageMessage(..)
         , ConnectStatus(..)
         , init
         , update
@@ -68,6 +69,13 @@ type Msg
     | WebsocketError String
     | SetUser (Maybe Session.User)
     | Control Id String
+      -- | PageMsg PageMessage
+    | HomeScreenMsg HomeScreen.Msg
+
+
+
+-- type PageMessage
+--     = HomeScreenMsg HomeScreen.Msg
 
 
 init : JE.Value -> ( Model, Cmd Msg )
@@ -182,6 +190,29 @@ update msg model =
 
         Control id cmd ->
             ( model, Cmd.batch [ Server.wsSendCmd id cmd, beep "0" ] )
+
+        -- PageMsg m ->
+        HomeScreenMsg sub_msg ->
+            let
+                _ =
+                    Debug.log "PageMsg" m
+
+                m =
+                    case model.pageModel of
+                        HomeScreenModel me ->
+                            me
+
+                        _ ->
+                            Debug.crash "WTF"
+
+                nm =
+                    HomeScreen.update sub_msg m
+            in
+                ( { model | pageModel = HomeScreenModel nm }, Cmd.none )
+
+
+
+-- ( model, Cmd.none )
 
 
 beep : String -> Cmd Msg
