@@ -37,6 +37,8 @@ ul.device_list {
 }
 
 .bottom_panel {
+    display: grid;
+    grid-template-columns: auto auto;
     text-align: center;
     i {
         font-size: 64px;

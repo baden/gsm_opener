@@ -31,6 +31,11 @@
         border-radius: 4px;
         color: lightblue;
         cursor: pointer;
+        font-weight: bold;
+
+        &.red {
+            color: #f55;
+        }
 
         i {
             margin-right: 4px;

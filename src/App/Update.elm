@@ -70,6 +70,7 @@ type Msg
     | OnClickAdd
     | Connect
     | Send
+    | SendCancel
     | Unlink String
     | WebsocketOpen String
     | WebsocketClose String
@@ -154,6 +155,17 @@ update msg model =
                     , Session.storeSession { token = "notoken", links = newLinks }
                     ]
                 )
+
+        SendCancel ->
+            ( { model
+                | imei = ""
+                , label =
+                    ""
+                    -- , pageModel = HomeScreenModel HomeScreen.init
+                , pageModel = DeviceListModel DeviceList.init
+              }
+            , Cmd.none
+            )
 
         Unlink id ->
             let

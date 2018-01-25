@@ -30,6 +30,7 @@ view m config =
             |> ul [ class "device_list" ]
         , div [ class "bottom_panel" ]
             [ micmd "add_circle_outline" config.onClickAdd
+            , mi "widgets"
             ]
         ]
 

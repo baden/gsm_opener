@@ -66,9 +66,11 @@ view model =
                             { onImei = OnIMEI
                             , onLabel = OnLabel
                             , onAdd = Send
+                            , onCancel = SendCancel
                             , imei = model.imei
                             , label = model.label
                             , disabled = disabledLink
+                            , nocancel = List.isEmpty model.links
                             }
 
                 HomeScreenModel m ->
