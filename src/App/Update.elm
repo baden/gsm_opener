@@ -212,10 +212,26 @@ update msg model =
                         _ ->
                             Debug.crash "WTF"
 
-                nm =
+                ( nm, p ) =
                     HomeScreen.update sub_msg m
+
+                id =
+                    "123"
+
+                cmd =
+                    "out1"
             in
-                ( { model | pageModel = HomeScreenModel nm }, Cmd.none )
+                case p of
+                    Nothing ->
+                        ( { model | pageModel = HomeScreenModel nm }, Cmd.none )
+
+                    Just (HomeScreen.OnSettings) ->
+                        ( { model | pageModel = HomeScreenModel nm }, Cmd.none )
+
+                    Just (HomeScreen.OnAction) ->
+                        ( { model | pageModel = HomeScreenModel nm }
+                        , Cmd.batch [ Server.wsSendCmd id cmd, beep "0" ]
+                        )
 
 
 

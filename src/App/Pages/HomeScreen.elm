@@ -1,4 +1,4 @@
-module Pages.HomeScreen exposing (Model, Msg, init, update, view)
+module Pages.HomeScreen exposing (Model, Msg, Config, ParentMsg(..), init, update, view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -22,13 +22,18 @@ type alias Config =
     }
 
 
+type ParentMsg
+    = OnSettings
+    | OnAction
+
+
 init : Model
 init =
     { inform = "Немає зв'язку з замком"
     }
 
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> ( Model, Maybe ParentMsg )
 update msg model =
     let
         _ =
@@ -36,13 +41,13 @@ update msg model =
     in
         case msg of
             NoOp ->
-                model
+                ( model, Nothing )
 
             ClickSettings ->
-                { model | inform = "Clicked settings" }
+                ( { model | inform = "Clicked settings" }, Just OnSettings )
 
             ClickAction ->
-                { model | inform = "Clicked action" }
+                ( { model | inform = "Clicked action" }, Just OnAction )
 
 
 view : Config -> Model -> Html Msg
@@ -78,11 +83,22 @@ viewMain c m =
 
                 _ ->
                     ""
+
+        oclass =
+            case c.device.out1 of
+                "0" ->
+                    " passive"
+
+                "1" ->
+                    " active"
+
+                _ ->
+                    ""
     in
         div [ class "home_screen_main" ]
             [ div [ class "big_control", onClick ClickAction ] [ mi "fingerprint" ]
             , div [ class <| "small_info_lt" ++ iclass ] [ mi "input" ]
-            , div [ class "small_info_rt" ] [ mi "lock_open" ]
+            , div [ class <| "small_info_rt" ++ oclass ] [ mi "lock_open" ]
             ]
 
 
