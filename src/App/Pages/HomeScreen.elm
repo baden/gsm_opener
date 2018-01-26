@@ -108,12 +108,43 @@ viewStatusbar c m =
         [ div [ class "inform_line" ] [ text m.inform ]
         , div [ class "link_status" ]
             [ span [ class "point" ] [ mi "tablet_mac" ]
-            , span [] [ text "o o o" ]
+            , viewLink LS_Connected
+
+            -- , viewLink LS_Sending
             , span [ class "point" ] [ mi "cloud" ]
-            , span [] [ text "o o o" ]
+            , viewLink LS_NoConnection
+
+            -- , viewLink LS_Sending
             , span [ class "point" ] [ mi "lock" ]
             ]
         ]
+
+
+type LinkState
+    = LS_NoConnection
+    | LS_Connected
+    | LS_Sending
+
+
+viewLink : LinkState -> Html msg
+viewLink ls =
+    case ls of
+        LS_NoConnection ->
+            div [ class "link_state line fail" ]
+                [ div [] [ text "✘" ]
+                ]
+
+        LS_Connected ->
+            div [ class "link_state line ok" ]
+                [ div [] [ text "✔" ]
+                ]
+
+        LS_Sending ->
+            div [ class "link_state progress" ]
+                [ div [] [ text "o" ]
+                , div [] [ text "o" ]
+                , div [] [ text "o" ]
+                ]
 
 
 mi : String -> Html Msg
