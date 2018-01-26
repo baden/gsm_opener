@@ -107,7 +107,10 @@ view model =
                                                 |> (\e -> ( title, e ))
                                     )
                     in
-                        DeviceList.view devices { onClickAdd = OnClickAdd }
+                        DeviceList.view devices
+                            { onClickAdd = OnClickAdd
+                            , onChooseDevice = OnChooseDevice
+                            }
 
                 DeviceSettingsModel m ->
                     DeviceSettings.view m

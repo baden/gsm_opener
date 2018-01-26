@@ -13,6 +13,7 @@ type alias Model =
 
 type alias Config msg =
     { onClickAdd : msg
+    , onChooseDevice : String -> msg
     }
 
 
@@ -26,7 +27,7 @@ view : List ( String, DeviceInfo ) -> Config msg -> Html msg
 view m config =
     div [ class "device_list" ]
         [ m
-            |> List.map viewDeviceItem
+            |> List.map (\e -> viewDeviceItem e config)
             |> ul [ class "device_list" ]
         , div [ class "bottom_panel" ]
             [ micmd "add_circle_outline" config.onClickAdd
@@ -35,11 +36,15 @@ view m config =
         ]
 
 
-viewDeviceItem : ( String, DeviceInfo ) -> Html msg
-viewDeviceItem ( title, d ) =
+
+--
+
+
+viewDeviceItem : ( String, DeviceInfo ) -> Config msg -> Html msg
+viewDeviceItem ( title, d ) config =
     li [ class "device_item" ]
         [ mi "settings"
-        , div []
+        , div [ class "chooser", onClick (config.onChooseDevice d.id) ]
             [ div [ class "label" ] [ text <| title ]
             , div [ class "id" ] [ text <| d.id ]
             ]

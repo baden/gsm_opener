@@ -36,9 +36,12 @@
             line-height: 64px;
             cursor: pointer;
             color: #0cb;
-            // &:hover {
-            //     color: lime;
-            // }
+            &:hover {
+                color: lime;
+            }
+            &:active {
+                background-color: blue;
+            }
         }
     }
 

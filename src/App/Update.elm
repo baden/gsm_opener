@@ -68,6 +68,7 @@ type Msg
     = OnIMEI String
     | OnLabel String
     | OnClickAdd
+    | OnChooseDevice Id
     | Connect
     | Send
     | SendCancel
@@ -131,6 +132,9 @@ update msg model =
 
         OnClickAdd ->
             ( { model | pageModel = AddDeviceModel }, Cmd.none )
+
+        OnChooseDevice _ ->
+            ( { model | pageModel = HomeScreenModel HomeScreen.init }, Cmd.none )
 
         Connect ->
             ( model
